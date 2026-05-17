@@ -1,0 +1,32 @@
+
+
+<div class="modal-overlay" id="modalDeleteOverlay">
+  <div class="modal-delete-box">
+
+    <!-- Icon -->
+    <div class="modal-delete-icon">
+      <i class="bi bi-trash3"></i>
+    </div>
+
+    <!-- Content -->
+    <h3 class="modal-delete-title">Hapus Data?</h3>
+    <p class="modal-delete-msg">
+      Data <strong id="deleteNama"></strong> akan dihapus secara permanen
+      dan tidak dapat dikembalikan.
+    </p>
+
+    <!-- Actions -->
+    <div class="modal-delete-actions">
+      <button type="button" class="modal-delete-btn-cancel" id="btnCancelDelete">
+        <i class="bi bi-x"></i> Batal
+      </button>
+      <form id="formDelete" method="POST" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="modal-delete-btn-confirm" id="btnConfirmDelete">
+          <i class="bi bi-trash3"></i> Ya, Hapus
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>

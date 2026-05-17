@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Data Transaksi — Sistem ERP{% endblock %}
+
+{% block extra_css %}
+  <link href="{% static 'css/alert.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/pagination.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/list_transaction.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_label %}Inventaris / Data Transaksi{% endblock %}
+
+{% block nav_transaksi %}active{% endblock %}
+
+{% block content %}
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-heading">Data Transaksi</h1>
+      <p class="page-sub">Riwayat seluruh transaksi barang masuk dan keluar.</p>
+    </div>
+  </div>
+
+
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-card stat-card-all">
+      <i class="bi bi-arrow-left-right"></i>
+      <div>
+        <span class="stat-value">{{ total_transaksi }}</span>
+        <span class="stat-label">Total Transaksi</span>
+      </div>
+    </div>
+    <div class="stat-card stat-card-in">
+      <i class="bi bi-box-arrow-in-down"></i>
+      <div>
+        <span class="stat-value">{{ total_masuk }}</span>
+        <span class="stat-label">Barang Masuk</span>
+      </div>
+    </div>
+    <div class="stat-card stat-card-out">
+      <i class="bi bi-box-arrow-up"></i>
+      <div>
+        <span class="stat-value">{{ total_keluar }}</span>
+        <span class="stat-label">Barang Keluar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter & Search -->
+  <form method="GET" id="filterForm">
+    <div class="search-bar">
+      <div class="search-wrap">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          name="q"
+          id="searchInput"
+          class="search-input"
+          placeholder="Cari nama produk atau kode barang..."
+          value="{{ request.GET.q }}"
+          autocomplete="off"
+        />
+        {% if request.GET.q %}
+          <button type="button" class="btn-search-clear" id="btnClearSearch">
+            <i class="bi bi-x"></i>
+          </button>
+        {% endif %}
+      </div>
+
+      <div class="filter-select-wrap">
+        <i class="bi bi-funnel filter-select-icon"></i>
+        <select name="jenis" id="filterJenis" class="filter-select">
+          <option value="">Semua Jenis</option>
+          <option value="IN"  {% if request.GET.type == 'IN'  %}selected{% endif %}>Barang Masuk</option>
+          <option value="OUT" {% if request.GET.type == 'OUT' %}selected{% endif %}>Barang Keluar</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-search-submit">
+        <i class="bi bi-search"></i> Cari
+      </button>
+
+      {% if request.GET.q or request.GET.type %}
+        <a href="{% url 'dashboard_app:list_transaksi' %}" class="btn-reset-filter">
+          <i class="bi bi-arrow-counterclockwise"></i> Reset
+        </a>
+      {% endif %}
+    </div>
+  </form>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <div class="table-responsive-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:40px;">No</th>
+            <th>Produk</th>
+            <th class="hide-mobile">Kode Barang</th>
+            <th style="text-align:center;">Jenis</th>
+            <th style="text-align:center;">Jumlah</th>
+            <th class="hide-mobile">Keterangan</th>
+            <th class="hide-mobile">Dibuat Oleh</th>
+            <th class="hide-mobile">Tanggal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for trx in list_transaction %}
+          <tr class="table-row">
+
+            <td class="td-number">{{ forloop.counter }}</td>
+
+            <td>
+              <div class="td-produk">
+                <div class="produk-icon
+                  {% if trx.type == 'IN' %}produk-icon-in{% else %}produk-icon-out{% endif %}">
+                  {% if trx.type == 'IN' %}
+                    <i class="bi bi-box-arrow-in-down"></i>
+                  {% else %}
+                    <i class="bi bi-box-arrow-up"></i>
+                  {% endif %}
+                </div>
+                <div>
+                  <div class="produk-nama">{{ trx.product.name }}</div>
+                  <div class="trx-meta-mobile hide-desktop">
+                    {{ trx.date|date:"d M Y" }}
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <td class="td-mono hide-mobile">{{ trx.product.kode_barang }}</td>
+
+            <td style="text-align:center;">
+              {% if trx.type == 'IN' %}
+                <span class="badge-jenis badge-in">
+                  <i class="bi bi-box-arrow-in-down"></i> Masuk
+                </span>
+              {% else %}
+                <span class="badge-jenis badge-out">
+                  <i class="bi bi-box-arrow-up"></i> Keluar
+                </span>
+              {% endif %}
+            </td>
+
+            <td style="text-align:center;">
+              <span class="jumlah-text
+                {% if trx.type == 'IN' %}jumlah-in{% else %}jumlah-out{% endif %}">
+                {% if trx.type == 'IN' %}+{% else %}-{% endif %}{{ trx.qty }}
+              </span>
+            </td>
+
+            <td class="td-muted hide-mobile">
+              {{ trx.note|default:"—" }}
+            </td>
+
+            <td class="td-muted hide-mobile">
+              {{ trx.user.get_username}}
+            </td>
+
+            <td class="td-muted hide-mobile">
+              {{ trx.date|date:"d M Y H:i" }}
+            </td>
+
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="td-empty">
+              <i class="bi bi-inbox"></i>
+              <p>
+                {% if request.GET.q or request.GET.type %}
+                  Tidak ada transaksi yang sesuai pencarian.
+                {% else %}
+                  Belum ada data transaksi.
+                {% endif %}
+              </p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% include 'components/pagination.html' %}
+
+    {% if not is_paginated %}
+    <div class="table-footer">
+      <span class="table-info">
+        Menampilkan {{ list_transaction|length }} dari {{ jumlah_transaksi }} transaksi
+      </span>
+    </div>
+    {% endif %}
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/alert.js' %}"></script>
+  <script src="{% static 'js/list_transaction.js' %}"></script>
+{% endblock %}

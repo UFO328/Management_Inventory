@@ -1,0 +1,146 @@
+/* =============================================
+   ALERT COMPONENT — ERP System
+   Pakai via: {% include 'components/alert.html' %}
+   Load CSS ini di base.html atau per halaman
+   ============================================= */
+
+.alert-container {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Base alert item ── */
+.alert-item {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .7rem 1rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  border-left-width: 4px;
+  font-size: .88rem;
+  line-height: 1.4;
+  animation: alertSlideIn .25s ease;
+}
+
+@keyframes alertSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Icon ── */
+.alert-icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Message ── */
+.alert-msg {
+  flex: 1;
+}
+
+/* ── Close button ── */
+.alert-close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: .1rem .25rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1;
+  opacity: .55;
+  transition: opacity .15s, background .15s;
+}
+
+.alert-close:hover {
+  opacity: 1;
+  background: rgba(0,0,0,.07);
+}
+
+/* ══════════════════════════════
+   VARIANTS
+══════════════════════════════ */
+
+/* Success */
+.alert-success {
+  background: #eaf7ec;
+  border-color: #a3d6a7;
+  border-left-color: #1e7e34;
+  color: #1a5c27;
+}
+
+.alert-success .alert-icon { color: #1e7e34; }
+.alert-success .alert-close { color: #1a5c27; }
+
+/* Error / Danger */
+.alert-error,
+.alert-danger {
+  background: #fdf3f3;
+  border-color: #f1b0b0;
+  border-left-color: #c0392b;
+  color: #922b21;
+}
+
+.alert-error .alert-icon,
+.alert-danger .alert-icon { color: #c0392b; }
+
+.alert-error .alert-close,
+.alert-danger .alert-close { color: #922b21; }
+
+/* Warning */
+.alert-warning {
+  background: #fef9ec;
+  border-color: #f9e4a0;
+  border-left-color: #d4ac0d;
+  color: #7d6608;
+}
+
+.alert-warning .alert-icon { color: #d4ac0d; }
+.alert-warning .alert-close { color: #7d6608; }
+
+/* Info */
+.alert-info {
+  background: #eaf4fb;
+  border-color: #a9cfe8;
+  border-left-color: #2e86c1;
+  color: #1a5276;
+}
+
+.alert-info .alert-icon { color: #2e86c1; }
+.alert-info .alert-close { color: #1a5276; }
+
+/* ── Fade out on close ── */
+.alert-item.fade-out {
+  animation: alertFadeOut .25s ease forwards;
+}
+
+@keyframes alertFadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-6px); }
+}
+
+/* ── Auto-close progress bar ── */
+.alert-item.auto-close {
+  position: relative;
+  overflow: hidden;
+}
+
+.alert-item.auto-close::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 3px;
+  background: currentColor;
+  opacity: .3;
+  animation: alertProgress 4s linear forwards;
+}
+
+@keyframes alertProgress {
+  from { width: 100%; }
+  to   { width: 0%; }
+}

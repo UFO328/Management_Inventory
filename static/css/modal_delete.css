@@ -1,0 +1,152 @@
+/* =============================================
+   MODAL DELETE KARYAWAN — Component styles
+   ============================================= */
+
+#modalDeleteOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .45);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+#modalDeleteOverlay.show {
+  display: flex;
+}
+
+/* ── Modal Box ── */
+.modal-delete-box {
+  background: var(--white);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 360px;
+  padding: 2rem 1.75rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .15);
+  animation: deleteModalIn .2s ease;
+}
+
+@keyframes deleteModalIn {
+  from { transform: scale(.93); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Icon ── */
+.modal-delete-icon {
+  width: 64px;
+  height: 64px;
+  background: #fdf3f3;
+  border: 2px solid #f1b0b0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.1rem;
+  font-size: 1.6rem;
+  color: var(--danger);
+}
+
+/* ── Title ── */
+.modal-delete-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .5rem;
+}
+
+/* ── Message ── */
+.modal-delete-msg {
+  font-size: .875rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 1.75rem;
+}
+
+.modal-delete-msg strong {
+  color: var(--text);
+}
+
+/* ── Actions ── */
+.modal-delete-actions {
+  display: flex;
+  gap: .65rem;
+}
+
+.modal-delete-btn-cancel {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  padding: .6rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--white);
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .2s, color .2s, border-color .2s;
+}
+
+.modal-delete-btn-cancel:hover {
+  background: var(--bg);
+  border-color: var(--muted);
+  color: var(--text);
+}
+
+.modal-delete-btn-confirm {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  padding: .6rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background: var(--danger);
+  color: var(--white);
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .2s;
+  width: 100%;
+}
+
+.modal-delete-btn-confirm:hover:not(:disabled) {
+  background: #a93226;
+}
+
+.modal-delete-btn-confirm:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+/* ── Spinner ── */
+.delete-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, .35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ── */
+@media (max-width: 400px) {
+  .modal-delete-box {
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  .modal-delete-actions {
+    flex-direction: column-reverse;
+  }
+}

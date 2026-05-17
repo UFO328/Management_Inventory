@@ -1,0 +1,198 @@
+<!-- MODAL TRANSAKSI -->
+<div class="modal-overlay" id="modalTransaksiOverlay">
+
+  <div class="modal-transaksi-box">
+
+    <!-- HEADER -->
+    <div class="modal-transaksi-header">
+
+      <div class="modal-transaksi-title">
+        <i class="bi bi-arrow-left-right"></i>
+        <span>Transaksi Stok</span>
+      </div>
+
+      <button type="button"
+              class="modal-transaksi-close"
+              id="btnCloseTransaksi"
+              aria-label="Tutup">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+    <!-- BODY -->
+    <div class="modal-transaksi-body">
+
+      <!-- INFO PRODUK -->
+      <div class="transaksi-produk-info">
+
+        <div class="transaksi-produk-icon">
+          <i class="bi bi-box-seam"></i>
+        </div>
+
+        <div class="transaksi-produk-detail">
+
+          <div class="transaksi-produk-nama"
+               id="transaksiNama">
+            —
+          </div>
+
+          <div class="transaksi-produk-stok">
+            Stok saat ini:
+            <strong id="transaksiStok">—</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ALERT -->
+      <div class="modal-transaksi-alert"
+           id="transaksiAlert">
+
+        <i class="bi bi-exclamation-circle-fill"></i>
+
+        <span id="transaksiAlertMsg"></span>
+
+      </div>
+
+      <!-- FORM -->
+      <form id="formTransaksi" method="POST">
+
+        {% csrf_token %}
+
+        <!-- PRODUCT ID -->
+        <input type="hidden"
+               name="product_id"
+               id="transaksiProdukId">
+
+        <!-- JENIS -->
+        <div class="form-group">
+
+          <label class="modal-label">
+            Jenis Transaksi
+            <span class="required">*</span>
+          </label>
+
+          <div class="jenis-wrap">
+
+            <!-- IN -->
+            <label class="jenis-option">
+
+              <input type="radio"
+                     name="jenis"
+                     value="IN"
+                     id="jenisMasuk"
+                     checked>
+
+              <div class="jenis-card">
+                <i class="bi bi-box-arrow-in-down"></i>
+                <span>Barang Masuk</span>
+              </div>
+
+            </label>
+
+            <!-- OUT -->
+            <label class="jenis-option">
+
+              <input type="radio"
+                     name="jenis"
+                     value="OUT"
+                     id="jenisKeluar">
+
+              <div class="jenis-card">
+                <i class="bi bi-box-arrow-up"></i>
+                <span>Barang Keluar</span>
+              </div>
+
+            </label>
+
+          </div>
+
+        </div>
+
+        <!-- JUMLAH -->
+        <div class="form-group">
+
+          <label class="modal-label"
+                 for="transaksiJumlah">
+
+            Jumlah
+            <span class="required">*</span>
+
+          </label>
+
+          <div class="modal-input-wrap">
+
+            <i class="bi bi-123 modal-input-icon"></i>
+
+            <input type="number"
+                   id="transaksiJumlah"
+                   name="jumlah"
+                   class="modal-input"
+                   placeholder="0"
+                   min="1">
+
+          </div>
+
+          <div class="modal-field-error"
+               id="jumlahErr"></div>
+
+        </div>
+
+        <!-- KETERANGAN -->
+        <div class="form-group">
+
+          <label class="modal-label"
+                 for="transaksiKeterangan">
+
+            Keterangan
+            <span class="optional">(opsional)</span>
+
+          </label>
+
+          <div class="modal-input-wrap">
+
+            <i class="bi bi-chat-text modal-input-icon icon-top"></i>
+
+            <textarea id="transaksiKeterangan"
+                      name="keterangan"
+                      class="modal-input modal-textarea"
+                      placeholder="Contoh: Restock supplier..."
+                      rows="2"></textarea>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="modal-transaksi-footer">
+
+      <button type="button"
+              class="modal-btn-cancel"
+              id="btnCancelTransaksi">
+
+        Batal
+
+      </button>
+
+      <button type="button"
+              class="modal-btn-transaksi"
+              id="btnSubmitTransaksi">
+
+        <i class="bi bi-check2-circle"></i>
+        Simpan Transaksi
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

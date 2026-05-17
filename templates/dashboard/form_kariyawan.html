@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tambah Karyawan — Sistem ERP{% endblock %}
+
+{% block extra_css %}
+  <link href="{% static 'css/tambah_karyawan.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_label %}
+  Manajemen Karyawan / Tambah Karyawan
+{% endblock %}
+
+{% block nav_karyawan %}active{% endblock %}
+
+{% block content %}
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-heading">Tambah Karyawan</h1>
+      <p class="page-sub">Isi data karyawan baru di bawah ini.</p>
+    </div>
+    <a href="#" class="btn-back">
+      <i class="bi bi-arrow-left"></i> Kembali
+    </a>
+  </div>
+
+  <div class="form-card">
+
+    <div class="alert-box alert-success-box" id="alertSuccess">
+      <i class="bi bi-check-circle-fill"></i>
+      <span id="successMsg"></span>
+    </div>
+
+    <div class="alert-box alert-error-box" id="alertError">
+      <i class="bi bi-exclamation-circle-fill"></i>
+      <span id="errorMsg">Periksa kembali isian form di bawah ini.</span>
+    </div>
+
+    <form id="formKaryawan" method="POST" action="#" novalidate>
+      {% csrf_token %}
+
+      <div class="row g-3">
+
+        <!-- Nama Lengkap -->
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="nama">
+            Nama Lengkap <span class="required">*</span>
+          </label>
+          <div class="input-wrap">
+            <i class="bi bi-person input-icon"></i>
+            <input type="text" id="nama" name="nama"
+                   class="form-input" placeholder="Contoh: Budi Santoso"/>
+          </div>
+          <div class="field-error" id="namaErr"></div>
+        </div>
+
+        <!-- NIK -->
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="nik">
+            NIK (No. KTP) <span class="required">*</span>
+          </label>
+          <div class="input-wrap">
+            <i class="bi bi-card-text input-icon"></i>
+            <input type="text" id="nik" name="nik"
+                   class="form-input" placeholder="16 digit NIK" maxlength="16"/>
+          </div>
+          <div class="field-error" id="nikErr"></div>
+        </div>
+
+        <!-- Email -->
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="email">
+            Email <span class="required">*</span>
+          </label>
+          <div class="input-wrap">
+            <i class="bi bi-envelope input-icon"></i>
+            <input type="email" id="email" name="email"
+                   class="form-input" placeholder="email@perusahaan.com"/>
+          </div>
+          <div class="field-error" id="emailErr"></div>
+        </div>
+
+        <!-- No. Telepon -->
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="noTelp">
+            No. Telepon <span class="required">*</span>
+          </label>
+          <div class="input-wrap">
+            <i class="bi bi-telephone input-icon"></i>
+            <input type="tel" id="noTelp" name="no_telepon"
+                   class="form-input" placeholder="08xxxxxxxxxx"/>
+          </div>
+          <div class="field-error" id="telpErr"></div>
+        </div>
+
+        <!-- Departemen -->
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="departemen">
+            Departemen <span class="required">*</span>
+          </label>
+          <div class="input-wrap">
+            <i class="bi bi-building input-icon"></i>
+            <select id="departemen" name="departemen" class="form-input form-select-custom">
+              <option value="">-- Pilih Departemen --</option>
+              {% for d in departemen_list %}
+              <option value="{{d.id}}">{{d.departemen}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field-error" id="deptErr"></div>
+        </div>
+
+        <!-- Jabatan -->
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="jabatan">
+            Jabatan <span class="required">*</span>
+          </label>
+          <div class="input-wrap">
+            <i class="bi bi-award input-icon"></i>
+            <select id="jabatan" name="jabatan" class="form-input form-select-custom">
+              <option value="">-- Pilih Jabatan --</option>
+              {% for j in jabatan_list %}
+              <option value="{{j.id}}">{{j.jabatan}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field-error" id="jabatanErr"></div>
+        </div>
+
+        <!-- Alamat -->
+        <div class="col-12">
+          <label class="form-label" for="alamat">
+            Alamat <span class="required">*</span>
+          </label>
+          <div class="input-wrap">
+            <i class="bi bi-geo-alt input-icon icon-top"></i>
+            <textarea id="alamat" name="alamat" class="form-input form-textarea"
+                      placeholder="Jl. Contoh No. 1, Kota, Provinsi" rows="3"></textarea>
+          </div>
+          <div class="field-error" id="alamatErr"></div>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-reset" id="btnReset">
+          <i class="bi bi-arrow-counterclockwise"></i> Reset
+        </button>
+        <button type="submit" class="btn-submit" id="btnSubmit">
+          <i class="bi bi-floppy"></i> Simpan Data
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/tambah_karyawan.js' %}"></script>
+{% endblock %}

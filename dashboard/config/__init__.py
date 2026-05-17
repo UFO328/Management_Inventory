@@ -1,0 +1,1 @@
+from .setup_role import sync_role_permision

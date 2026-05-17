@@ -1,0 +1,96 @@
+/* =============================================
+   PAGINATION — Shared Component
+   Load di base.html agar berlaku di semua halaman
+   ============================================= */
+
+.pagination-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 1rem;
+  border-top: 1px solid var(--border);
+  background: #fafbfc;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+/* Info teks */
+.pagination-info {
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+/* Tombol-tombol */
+.pagination-btns {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+/* Base button */
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 .5rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--white);
+  color: var(--text);
+  font-size: .82rem;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.page-btn:hover {
+  background: var(--bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Active / current page */
+.page-btn-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+  font-weight: 700;
+  cursor: default;
+  pointer-events: none;
+}
+
+.page-btn-active:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+}
+
+/* Disabled */
+.page-btn-disabled {
+  background: var(--bg);
+  border-color: var(--border);
+  color: #c0c8d4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 576px) {
+  .pagination-wrap {
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+    padding: .85rem 1rem;
+  }
+
+  .pagination-info {
+    text-align: center;
+  }
+}

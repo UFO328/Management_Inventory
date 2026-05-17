@@ -1,0 +1,68 @@
+{% load static %}
+<aside class="sidebar" id="sidebar">
+
+  <div class="sidebar-brand">
+    <i class="bi bi-layers"></i>
+    <span>Sistem ERP</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">Utama</div>
+    <a href="{% url 'dashboard_app:dashboard' %}"
+       class="nav-item {% block nav_dashboard %}{% endblock %}">
+      <i class="bi bi-grid-1x2"></i>
+      <span>Dashboard</span>
+    </a>
+    {% if request.user.role == 'Kepala Gudang' or request.user.role == 'Staff Gudang' %}
+    <div class="nav-group-label">Inventaris</div>
+     {% endif %}
+
+    {% if perms.dashboard.view_product %}
+    <a href="{% url 'dashboard_app:list_product' %}" class="nav-item {% block nav_barang %}{% endblock %}">
+      <i class="bi bi-boxes"></i>
+      <span>Data Barang</span>
+    </a>
+    {% endif %}
+    {% if perms.dashboard.add_product %}
+    <a href="{% url 'dashboard_app:create_product' %}" class="nav-item {% block nav_stok %}{% endblock %}">
+      <i class="bi bi-plus-square-fill"></i>
+      <span>Create Product </span>
+    </a>
+    {% endif %}
+    {% if perms.dashboard.view_transaction %}
+    <a href="{% url 'dashboard_app:list_transaction' %}" class="nav-item {% block nav_transaksi %}{% endblock %}">
+      <i class="bi bi-arrow-left-right"></i>
+      <span>Transaksi</span>
+    </a>
+    {% endif %}
+    {% if request.user.role == 'HRD' %}
+    <div class="nav-group-label">SDM</div>
+    {% endif %}
+    {% if perms.dashboard.add_karyawan %}
+    <a href="{%url 'dashboard_app:tambah_karyawan'%}" class="nav-item {% block nav_karyawan %}{% endblock %}">
+      <i class="bi bi-people"></i>
+      <span>Form Karyawan</span>
+    </a>
+    {% endif %}
+    
+    {% if  perms.dashboard.view_karyawan %}
+    <a href="{% url 'dashboard_app:list_karyawan' %}" class="nav-item {% block nav_akun %}{% endblock %}">
+      <i class="bi bi-person-badge"></i>
+      <span>List Data Karyawan</span>
+    </a>
+    {% endif %}
+
+    <div class="nav-group-label">Laporan</div>
+    <a href="#" class="nav-item {% block nav_laporan %}{% endblock %}">
+      <i class="bi bi-file-earmark-bar-graph"></i>
+      <span>Laporan</span>
+    </a>
+
+  </nav>
+
+  <div class="sidebar-footer">
+    <i class="bi bi-circle-fill text-success" style="font-size:.5rem;"></i>
+    Versi 1.0.0
+  </div>
+
+</aside>

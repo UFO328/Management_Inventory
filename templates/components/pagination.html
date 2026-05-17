@@ -1,0 +1,59 @@
+{% if is_paginated %}
+<div class="pagination-wrap">
+
+  <span class="pagination-info">
+    Halaman {{ page_obj.number }} dari {{ page_obj.paginator.num_pages }}
+    &nbsp;·&nbsp;
+    {{ page_obj.paginator.count }} data
+  </span>
+
+  <div class="pagination-btns">
+
+    {% if page_obj.has_previous %}
+      <a href="?page=1{% for key, val in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ val }}{% endif %}{% endfor %}"
+         class="page-btn" title="Halaman pertama">
+        <i class="bi bi-chevron-double-left"></i>
+      </a>
+      <a href="?page={{ page_obj.previous_page_number }}{% for key, val in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ val }}{% endif %}{% endfor %}"
+         class="page-btn" title="Sebelumnya">
+        <i class="bi bi-chevron-left"></i>
+      </a>
+    {% else %}
+      <span class="page-btn page-btn-disabled">
+        <i class="bi bi-chevron-double-left"></i>
+      </span>
+      <span class="page-btn page-btn-disabled">
+        <i class="bi bi-chevron-left"></i>
+      </span>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <span class="page-btn page-btn-active">{{ num }}</span>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?page={{ num }}{% for key, val in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ val }}{% endif %}{% endfor %}"
+           class="page-btn">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{% for key, val in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ val }}{% endif %}{% endfor %}"
+         class="page-btn" title="Selanjutnya">
+        <i class="bi bi-chevron-right"></i>
+      </a>
+      <a href="?page={{ page_obj.paginator.num_pages }}{% for key, val in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ val }}{% endif %}{% endfor %}"
+         class="page-btn" title="Halaman terakhir">
+        <i class="bi bi-chevron-double-right"></i>
+      </a>
+    {% else %}
+      <span class="page-btn page-btn-disabled">
+        <i class="bi bi-chevron-right"></i>
+      </span>
+      <span class="page-btn page-btn-disabled">
+        <i class="bi bi-chevron-double-right"></i>
+      </span>
+    {% endif %}
+
+  </div>
+</div>
+{% endif %}

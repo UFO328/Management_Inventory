@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Data Karyawan — Sistem ERP{% endblock %}
+
+{% block extra_css %}
+  <link href="{% static 'css/alert.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/pagination.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/karyawan_list.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/modal.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/modal_delete.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_label %}SDM / Data Karyawan{% endblock %}
+
+{% block nav_karyawan %}active{% endblock %}
+
+{% block content %}
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-heading">Data Karyawan</h1>
+      <p class="page-sub">Kelola seluruh data karyawan perusahaan.</p>
+    </div>
+    <a href="{% url 'dashboard_app:tambah_karyawan' %}" class="btn-primary-action">
+      <i class="bi bi-person-plus"></i>
+      <span>Tambah Karyawan</span>
+    </a>
+  </div>
+
+  <!-- Alert -->
+  {% include 'components/alert.html' %}
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <i class="bi bi-people"></i>
+      <div>
+        <span class="stat-value">{{ jumlah_karyawan }}</span>
+        <span class="stat-label">Total Karyawan</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter & Search Bar — server-side GET -->
+  <form method="GET" id="filterForm">
+    <div class="filter-bar">
+
+      <div class="search-wrap">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          name="q"
+          id="searchInput"
+          class="search-input"
+          placeholder="Cari nama, NIK, atau email..."
+          value="{{ request.GET.q }}"
+          autocomplete="off"
+        />
+        {% if request.GET.q %}
+          <button type="button" class="search-clear" id="btnClearSearch" title="Hapus pencarian">
+            <i class="bi bi-x"></i>
+          </button>
+        {% endif %}
+      </div>
+
+      <div class="filter-wrap">
+        <select name="dept" id="filterDept" class="filter-select">
+          <option value="">Semua Departemen</option>
+          {% for dept in list_departemen %}
+            <option value="{{ dept.departemen }}"
+              {% if request.GET.dept == dept.departemen %}selected{% endif %}>
+              {{ dept.departemen }}
+            </option>
+          {% endfor %}
+        </select>
+
+        <select name="jabatan" id="filterJabatan" class="filter-select">
+          <option value="">Semua Jabatan</option>
+          {% for jab in list_jabatan %}
+            <option value="{{ jab.jabatan }}"
+              {% if request.GET.jabatan == jab.jabatan %}selected{% endif %}>
+              {{ jab.jabatan }}
+            </option>
+          {% endfor %}
+        </select>
+
+        <button type="submit" class="btn-filter">
+          <i class="bi bi-funnel"></i> Filter
+        </button>
+
+        {% if request.GET.q or request.GET.dept or request.GET.jabatan %}
+          <a href="{% url 'dashboard_app:list_karyawan' %}" class="btn-reset-filter">
+            <i class="bi bi-x-circle"></i> Reset
+          </a>
+        {% endif %}
+      </div>
+
+    </div>
+  </form>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <div class="table-responsive-wrap">
+      <table class="data-table" id="karyawanTable">
+        <thead>
+          <tr>
+            <th style="width:40px;">No</th>
+            <th>Nama Karyawan</th>
+            <th class="hide-mobile">NIK</th>
+            <th class="hide-mobile">No. Telepon</th>
+            <th>Departemen</th>
+            <th class="hide-mobile">Jabatan</th>
+            <th style="width:100px; text-align:center;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          {% for karyawan in list_karyawan %}
+          <tr class="table-row">
+            <td class="td-number">{{ forloop.counter }}</td>
+
+            <td>
+              <div class="td-nama">
+                <div class="avatar">{{ karyawan.nama|first|upper }}</div>
+                <div>
+                  <div class="nama-text">{{ karyawan.nama }}</div>
+                  <div class="email-sub">{{ karyawan.email }}</div>
+                </div>
+              </div>
+            </td>
+
+            <td class="td-mono hide-mobile">{{ karyawan.nik }}</td>
+            <td class="td-muted hide-mobile">{{ karyawan.telepon }}</td>
+
+            <td>
+              <span class="badge-dept">{{ karyawan.departemen.departemen }}</span>
+            </td>
+
+            <td class="td-muted hide-mobile">{{ karyawan.jabatan.jabatan }}</td>
+
+            <td class="td-aksi">
+              <a href="#" class="btn-icon btn-view" title="Detail">
+                <i class="bi bi-eye"></i>
+              </a>
+
+              <button type="button"
+                      class="btn-icon btn-edit" title="Edit"
+                      data-nama="{{ karyawan.nama }}"
+                      data-nik="{{ karyawan.nik }}"
+                      data-email="{{ karyawan.email }}"
+                      data-telp="{{ karyawan.telepon }}"
+                      data-alamat="{{ karyawan.alamat }}"
+                      data-departemen="{{ karyawan.departemen.id }}"
+                      data-jabatan="{{ karyawan.jabatan.id }}"
+                      data-url="{% url 'dashboard_app:update_karyawan' karyawan.id %}"
+                      onclick="openEditModal(this.dataset)">
+                <i class="bi bi-pencil"></i>
+              </button>
+
+              <button type="button"
+                      class="btn-icon btn-delete" title="Hapus"
+                      data-nama="{{ karyawan.nama }}"
+                      data-url="{% url 'dashboard_app:delete_karyawan' karyawan.id %}"
+                      onclick="openDeleteModal(this.dataset)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="td-empty">
+              <i class="bi bi-inbox"></i>
+              <p>
+                {% if request.GET.q or request.GET.dept or request.GET.jabatan %}
+                  Tidak ada data yang sesuai dengan pencarian.
+                {% else %}
+                  Belum ada data karyawan.
+                {% endif %}
+              </p>
+              {% if not request.GET.q %}
+                <a href="{% url 'dashboard_app:tambah_karyawan' %}">Tambah sekarang</a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination — teruskan parameter GET -->
+    {% include 'components/pagination.html' %}
+
+    {% if not is_paginated %}
+    <div class="table-footer">
+      <span class="table-info">
+        Menampilkan {{ list_karyawan|length }} dari {{ jumlah_karyawan }} karyawan
+      </span>
+    </div>
+    {% endif %}
+
+  </div>
+
+  {% include 'components/modal_update_karyawan.html' %}
+  {% include 'components/modal_delete.html' %}
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/alert.js' %}"></script>
+  <script src="{% static 'js/karyawan_list.js' %}"></script>
+  <script src="{% static 'js/modal.js' %}"></script>
+{% endblock %}

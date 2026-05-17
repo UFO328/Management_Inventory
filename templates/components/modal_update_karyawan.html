@@ -1,0 +1,144 @@
+
+<div class="modal-overlay" id="modalEditOverlay">
+  <div class="modal-edit-box">
+
+    <!-- Header -->
+    <div class="modal-edit-header">
+      <div class="modal-edit-title">
+        <i class="bi bi-pencil-square"></i>
+        <span>Edit Data Karyawan</span>
+      </div>
+      <button class="modal-edit-close" id="btnCloseModalEdit" type="button" aria-label="Tutup">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-edit-body">
+
+      <!-- Alert error dalam modal -->
+      <div class="modal-alert-error" id="modalAlertError">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span id="modalAlertMsg">Periksa kembali isian form.</span>
+      </div>
+
+      <form id="formEditKaryawan" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="row g-3">
+
+          <!-- Nama Lengkap -->
+          <div class="col-12 col-sm-6">
+            <label class="modal-label" for="editNama">
+              Nama Lengkap <span class="required">*</span>
+            </label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-person modal-input-icon"></i>
+              <input type="text" id="editNama" name="nama"
+                     class="modal-input" placeholder="Nama lengkap"/>
+            </div>
+            <div class="modal-field-error" id="editNamaErr"></div>
+          </div>
+
+          <!-- NIK -->
+          <div class="col-12 col-sm-6">
+            <label class="modal-label" for="editNik">
+              NIK <span class="required">*</span>
+            </label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-card-text modal-input-icon"></i>
+              <input type="text" id="editNik" name="nik"
+                     class="modal-input" placeholder="16 digit NIK" maxlength="16"/>
+            </div>
+            <div class="modal-field-error" id="editNikErr"></div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-12 col-sm-6">
+            <label class="modal-label" for="editEmail">
+              Email <span class="required">*</span>
+            </label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-envelope modal-input-icon"></i>
+              <input type="email" id="editEmail" name="email"
+                     class="modal-input" placeholder="email@perusahaan.com"/>
+            </div>
+            <div class="modal-field-error" id="editEmailErr"></div>
+          </div>
+
+          <!-- No. Telepon -->
+          <div class="col-12 col-sm-6">
+            <label class="modal-label" for="editNoTelp">
+              No. Telepon <span class="required">*</span>
+            </label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-telephone modal-input-icon"></i>
+              <input type="tel" id="editNoTelp" name="telepon"
+                     class="modal-input" placeholder="08xxxxxxxxxx"/>
+            </div>
+            <div class="modal-field-error" id="editTelpErr"></div>
+          </div>
+
+          <!-- Departemen -->
+          <div class="col-12 col-sm-6">
+            <label class="modal-label" for="editDepartemen">
+              Departemen <span class="required">*</span>
+            </label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-building modal-input-icon"></i>
+              <select id="editDepartemen" name="departemen"
+                      class="modal-input modal-select">
+                <option value="">-- Pilih Departemen --</option>
+                {% for dept in list_departemen %}
+                  <option value="{{ dept.id }}">{{ dept.departemen }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="modal-field-error" id="editDeptErr"></div>
+          </div>
+
+          <!-- Jabatan -->
+          <div class="col-12 col-sm-6">
+            <label class="modal-label" for="editJabatan">
+              Jabatan <span class="required">*</span>
+            </label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-award modal-input-icon"></i>
+              <select id="editJabatan" name="jabatan"
+                      class="modal-input modal-select">
+                <option value="">-- Pilih Jabatan --</option>
+                {% for jab in list_jabatan %}
+                  <option value="{{ jab.id }}">{{ jab.jabatan }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="modal-field-error" id="editJabatanErr"></div>
+          </div>
+
+          <!-- Alamat -->
+          <div class="col-12">
+            <label class="modal-label" for="editAlamat">Alamat</label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-geo-alt modal-input-icon icon-top"></i>
+              <textarea id="editAlamat" name="alamat"
+                        class="modal-input modal-textarea"
+                        placeholder="Jl. Contoh No. 1, Kota, Provinsi"
+                        rows="2"></textarea>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-edit-footer">
+      <button type="button" class="modal-btn-cancel" id="btnCancelEdit">
+        Batal
+      </button>
+      <button type="button" class="modal-btn-save" id="btnSaveEdit">
+        <i class="bi bi-floppy"></i> Simpan Perubahan
+      </button>
+    </div>
+
+  </div>
+</div>

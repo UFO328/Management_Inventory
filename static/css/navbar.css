@@ -1,0 +1,442 @@
+/* =============================================
+   NAVBAR & BASE LAYOUT — ERP System
+   Gunakan di semua halaman via base.html
+   ============================================= */
+
+:root {
+  --primary:       #1e3a5f;
+  --primary-hover: #162d4a;
+  --primary-light: #264d7a;
+  --accent:        #2e86c1;
+  --bg:            #f4f6f9;
+  --white:         #ffffff;
+  --border:        #d0d7e2;
+  --muted:         #6c7a8d;
+  --danger:        #c0392b;
+  --success:       #1e7e34;
+  --text:          #1a2b3c;
+
+  --sidebar-w:     230px;
+  --topbar-h:      54px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+}
+html, body { 
+  overflow-x: hidden; 
+  
+}
+
+/* ══════════════════════════════
+   SIDEBAR
+══════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--primary);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 200;
+  transition: transform .25s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Brand */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: 0 1.25rem;
+  height: var(--topbar-h);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: .02em;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  flex-shrink: 0;
+}
+
+.sidebar-brand i { font-size: 1.3rem; }
+
+/* Nav */
+.sidebar-nav {
+  padding: 1rem 0;
+  flex: 1;
+}
+
+.nav-group-label {
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  padding: .85rem 1.25rem .35rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .55rem 1.25rem;
+  color: rgba(255,255,255,.72);
+  text-decoration: none;
+  font-size: .88rem;
+  border-left: 3px solid transparent;
+  transition: background .15s, color .15s, border-color .15s;
+}
+
+.nav-item i { font-size: 1rem; flex-shrink: 0; }
+
+.nav-item:hover {
+  background: rgba(255,255,255,.07);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+
+/* Footer */
+.sidebar-footer {
+  padding: .85rem 1.25rem;
+  font-size: .72rem;
+  color: rgba(255,255,255,.3);
+  border-top: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   MAIN AREA
+══════════════════════════════ */
+.main-area {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════
+   TOPBAR
+══════════════════════════════ */
+.topbar {
+  height: var(--topbar-h);
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+/* Hamburger (hidden on desktop) */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: .2rem .35rem;
+  border-radius: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.hamburger:hover { background: var(--bg); }
+
+/* Page label */
+.topbar-title {
+  flex: 1;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Right side */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* Icon button (notif) */
+.topbar-icon-btn {
+  position: relative;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: .35rem .45rem;
+  border-radius: 5px;
+  transition: background .15s, color .15s;
+  line-height: 1;
+}
+
+.topbar-icon-btn:hover {
+  background: var(--bg);
+  color: var(--primary);
+}
+
+.notif-badge {
+  position: absolute;
+  top: 2px; right: 2px;
+  background: var(--danger);
+  color: #fff;
+  font-size: .6rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0 .28rem;
+  line-height: 1.4;
+  min-width: 14px;
+  text-align: center;
+}
+
+/* User dropdown */
+.user-dropdown { position: relative; }
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: .3rem .65rem .3rem .4rem;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+
+.user-btn:hover {
+  background: var(--bg);
+  border-color: var(--accent);
+}
+
+.user-avatar {
+  width: 30px; height: 30px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  letter-spacing: .03em;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.user-name {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.user-role {
+  font-size: .72rem;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.chevron {
+  font-size: .65rem;
+  color: var(--muted);
+  transition: transform .2s;
+}
+
+.user-dropdown.open .chevron { transform: rotate(180deg); }
+
+/* Dropdown menu */
+.dropdown-menu-custom {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + .4rem);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.10);
+  min-width: 180px;
+  padding: .35rem 0;
+  z-index: 300;
+}
+
+.user-dropdown.open .dropdown-menu-custom { display: block; }
+
+.dropdown-item-custom {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .5rem 1rem;
+  font-size: .85rem;
+  color: var(--text);
+  text-decoration: none;
+  transition: background .15s;
+}
+
+.dropdown-item-custom:hover { background: var(--bg); }
+
+.dropdown-item-custom.text-danger { color: var(--danger); }
+.dropdown-item-custom.text-danger:hover { background: #fdf3f3; }
+
+.dropdown-divider-custom {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: .3rem 0;
+}
+
+/* ══════════════════════════════
+   CONTENT AREA
+══════════════════════════════ */
+.content-area {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+/* Sidebar overlay (mobile) */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  z-index: 190;
+}
+
+.sidebar-overlay.show { display: block; }
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-area {
+    margin-left: 0;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .user-btn {
+    padding: .3rem .4rem;
+  }
+
+  .content-area {
+    padding: 1rem .85rem;
+  }
+}
+
+/* ── Topbar logout button ── */
+.topbar-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--danger);
+  text-decoration: none;
+  padding: .35rem .75rem;
+  border: 1px solid #f1b0b0;
+  border-radius: 5px;
+  background: #fff;
+  transition: background .15s, border-color .15s;
+}
+
+.topbar-logout:hover {
+  background: #fdf3f3;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.topbar-logout i { font-size: .95rem; }
+
+/* ══════════════════════════════
+   FIX MOBILE ZOOM / OVERFLOW
+══════════════════════════════ */
+
+/* Cegah konten melebihi lebar layar */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.main-area {
+  overflow-x: hidden;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.content-area {
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+/* Tabel — paksa scroll horizontal di dalam card */
+.table-responsive-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* Cegah elemen apapun melebihi parent */
+img,
+video,
+iframe,
+table {
+  max-width: 100%;
+}
+
+/* Fix form & input di mobile */
+input,
+select,
+textarea {
+  max-width: 100%;
+}

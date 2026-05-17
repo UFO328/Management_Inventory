@@ -1,0 +1,377 @@
+/* =============================================
+   MODAL TRANSAKSI — Component styles
+   ============================================= */
+
+/* ── Overlay ── */
+#modalTransaksiOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .45);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+#modalTransaksiOverlay.show {
+  display: flex;
+}
+
+/* ── Modal Box ── */
+.modal-transaksi-box {
+  background: var(--white);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .15);
+  animation: modalIn .2s ease;
+  overflow: hidden;
+}
+
+@keyframes modalIn {
+  from { transform: scale(.95); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Header ── */
+.modal-transaksi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: var(--primary);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  flex-shrink: 0;
+}
+
+.modal-transaksi-title {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.modal-transaksi-title i { font-size: 1rem; }
+
+.modal-transaksi-close {
+  background: rgba(255,255,255,.15);
+  border: none;
+  color: var(--white);
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: .85rem;
+  transition: background .15s;
+  flex-shrink: 0;
+}
+
+.modal-transaksi-close:hover { background: rgba(255,255,255,.25); }
+
+/* ── Body ── */
+.modal-transaksi-body {
+  padding: 1.25rem;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Produk info box ── */
+.transaksi-produk-info {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  background: #f0f5fb;
+  border: 1px solid #c5daf5;
+  border-radius: 7px;
+  padding: .85rem 1rem;
+}
+
+.transaksi-produk-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  color: var(--white);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.transaksi-produk-nama {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: .2rem;
+}
+
+.transaksi-produk-stok {
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+.transaksi-produk-stok strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* ── Alert error ── */
+.modal-transaksi-alert {
+  display: none;
+  align-items: center;
+  gap: .5rem;
+  background: #fdf3f3;
+  border: 1px solid #f1b0b0;
+  border-left: 4px solid var(--danger);
+  color: var(--danger);
+  border-radius: 5px;
+  padding: .6rem .85rem;
+  font-size: .84rem;
+}
+
+.modal-transaksi-alert.show { display: flex; }
+
+/* ── Form group ── */
+.form-group { display: flex; flex-direction: column; gap: .35rem; }
+
+/* ── Label ── */
+.modal-label {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.required { color: var(--danger); }
+
+.optional {
+  font-size: .75rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* ── Jenis transaksi toggle ── */
+.jenis-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .65rem;
+}
+
+.jenis-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.jenis-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+  padding: .75rem .5rem;
+  border: 2px solid var(--border);
+  border-radius: 7px;
+  background: var(--white);
+  cursor: pointer;
+  transition: border-color .2s, background .2s, color .2s;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--muted);
+  user-select: none;
+}
+
+.jenis-card i { font-size: 1.4rem; }
+
+/* Masuk — selected */
+#jenisMasuk:checked + .jenis-card {
+  border-color: var(--success);
+  background: #eaf7ec;
+  color: var(--success);
+}
+
+/* Keluar — selected */
+#jenisKeluar:checked + .jenis-card {
+  border-color: var(--danger);
+  background: #fdf3f3;
+  color: var(--danger);
+}
+
+.jenis-card:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Input wrap ── */
+.modal-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.modal-input-icon {
+  position: absolute;
+  left: .7rem;
+  color: var(--muted);
+  font-size: .88rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.icon-top {
+  top: .58rem;
+  align-self: flex-start;
+}
+
+/* ── Input ── */
+.modal-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: .55rem .8rem .55rem 2.2rem;
+  font-size: .9rem;
+  color: var(--text);
+  background: var(--white);
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.modal-input::placeholder { color: #b0bbc9; }
+
+.modal-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(46,134,193,.13);
+}
+
+.modal-input.is-error {
+  border-color: var(--danger);
+  background: #fffafa;
+}
+
+/* number — hapus spinner */
+input[type="number"].modal-input::-webkit-inner-spin-button,
+input[type="number"].modal-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"].modal-input { -moz-appearance: textfield; }
+
+/* textarea */
+.modal-textarea {
+  resize: vertical;
+  min-height: 68px;
+  padding-top: .55rem;
+  line-height: 1.5;
+}
+
+/* ── Field error ── */
+.modal-field-error {
+  font-size: .76rem;
+  color: var(--danger);
+  display: none;
+}
+
+.modal-field-error.show { display: block; }
+
+/* ── Footer ── */
+.modal-transaksi-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .65rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border);
+  background: #fafbfc;
+  flex-shrink: 0;
+}
+
+.modal-btn-cancel {
+  padding: .55rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--white);
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .2s, color .2s;
+}
+
+.modal-btn-cancel:hover { background: var(--bg); color: var(--text); }
+
+.modal-btn-transaksi {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .55rem 1.25rem;
+  border: none;
+  border-radius: 5px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .2s;
+}
+
+.modal-btn-transaksi:hover:not(:disabled) { background: var(--primary-hover); }
+.modal-btn-transaksi:disabled { opacity: .7; cursor: not-allowed; }
+
+/* ── Spinner ── */
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Tombol transaksi di tabel ── */
+.btn-transaksi { color: var(--accent); }
+.btn-transaksi:hover {
+  background: #eaf4fb;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 576px) {
+  .modal-transaksi-box {
+    max-height: 95vh;
+    border-radius: 8px;
+  }
+
+  .modal-transaksi-body { padding: 1rem .85rem; }
+
+  .modal-transaksi-footer {
+    flex-direction: column-reverse;
+    gap: .5rem;
+    padding: .85rem;
+  }
+
+  .modal-btn-cancel,
+  .modal-btn-transaksi {
+    width: 100%;
+    justify-content: center;
+  }
+}

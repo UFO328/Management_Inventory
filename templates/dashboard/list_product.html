@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Daftar Produk — Sistem ERP{% endblock %}
+
+{% block extra_css %}
+  <link href="{% static 'css/alert.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/pagination.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/list_product.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/modal_transaction.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/modal_delete.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_label %}Inventaris / Daftar Produk{% endblock %}
+
+{% block nav_barang %}active{% endblock %}
+
+{% block content %}
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-heading">Daftar Produk</h1>
+      <p class="page-sub">Kelola seluruh data produk inventaris.</p>
+    </div>
+    <a href="{% url 'dashboard_app:create_product' %}" class="btn-primary-action">
+      <i class="bi bi-plus-lg"></i>
+      <span>Tambah Produk</span>
+    </a>
+  </div>
+
+
+  <!-- Search -->
+  <form method="GET" id="filterForm">
+    <div class="search-bar">
+      <div class="search-wrap">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          name="q"
+          id="searchInput"
+          class="search-input"
+          placeholder="Cari nama atau kode barang..."
+          value="{{ request.GET.q }}"
+          autocomplete="off"
+        />
+        {% if request.GET.q %}
+          <button type="button" class="btn-search-clear" id="btnClearSearch">
+            <i class="bi bi-x"></i>
+          </button>
+        {% endif %}
+      </div>
+      <button type="submit" class="btn-search-submit">
+        <i class="bi bi-search"></i> Cari
+      </button>
+      {% if request.GET.q %}
+        <a href="{% url 'dashboard_app:list_product' %}" class="btn-reset-filter">
+          <i class="bi bi-arrow-counterclockwise"></i> Reset
+        </a>
+      {% endif %}
+    </div>
+  </form>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <div class="table-responsive-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:40px;">No</th>
+            <th>Nama Produk</th>
+            <th class="hide-mobile">Kode Barang</th>
+            <th class="hide-mobile">Kategori</th>
+            <th class="hide-mobile">Supplier</th>
+            <th style="text-align:center;">Stok</th>
+            <th style="width:100px; text-align:center;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for produk in list_product %}
+          <tr class="table-row">
+            <td class="td-number">{{ forloop.counter }}</td>
+
+            <td>
+              <div class="td-produk">
+                <div class="produk-icon">
+                  <i class="bi bi-box-seam"></i>
+                </div>
+                <div>
+                  <div class="produk-nama">{{ produk.name }}</div>
+                  <div class="produk-kode-mobile hide-desktop">
+                    {{ produk.kode_barang }}
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <td class="td-mono hide-mobile">{{ produk.kode_barang }}</td>
+            <td class="td-muted hide-mobile">{{ produk.category.name }}</td>
+            <td class="td-muted hide-mobile">{{ produk.suplier }}</td>
+
+            <td style="text-align:center;">
+              {% if produk.stock == 0 %}
+                <span class="badge-stok badge-stok-habis">Habis</span>
+              {% elif produk.stock <= 10 %}
+                <span class="badge-stok badge-stok-menipis">{{ produk.stock }}</span>
+              {% else %}
+                <span class="badge-stok badge-stok-tersedia">{{ produk.stock }}</span>
+              {% endif %}
+            </td>
+
+            <td class="td-aksi">
+             <button type="button"
+              class="btn-icon btn-transaksi"
+              title="Transaksi"
+              data-id="{{ produk.id }}"
+              data-nama="{{ produk.name }}"
+              data-stok="{{ produk.stock }}"
+              data-url="{% url 'dashboard_app:create_transaction' produk.id %}"
+              onclick="openTransaksiModal(this.dataset)">
+              <i class="bi bi-arrow-left-right"></i>
+              </button>
+              <button type="button"
+                      class="btn-icon btn-delete" title="Hapus"
+                      data-nama="{{ produk.name }}"
+                      data-url="{% url 'dashboard_app:delete_product' produk.id %}"
+                      onclick="openDeleteModal(this.dataset)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="td-empty">
+              <i class="bi bi-inbox"></i>
+              <p>
+                {% if request.GET.q %}
+                  Tidak ada produk yang sesuai dengan "{{ request.GET.q }}".
+                {% else %}
+                  Belum ada data produk.
+                {% endif %}
+              </p>
+              {% if not request.GET.q %}
+                <a href="{% url 'dashboard_app:create_product' %}">
+                  Tambah produk sekarang
+                </a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% include 'components/pagination.html' %}
+    {% include 'components/modal_delete.html' %}
+    {% include 'components/modal_transaction.html' %}
+    {% if not is_paginated %}
+    <div class="table-footer">
+      <span class="table-info">
+        Menampilkan {{ list_product|length }} dari {{ total_produk }} produk
+      </span>
+    </div>
+    {% endif %}
+  </div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/alert.js' %}"></script>
+  <script src="{% static 'js/list_product.js' %}"></script>
+  <script src="{% static 'js/modal_transaction.js' %}"></script>
+  <script src="{% static 'js/modal.js' %}"></script>
+{% endblock %}

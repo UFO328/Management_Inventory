@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tambah Produk — Sistem ERP{% endblock %}
+
+{% block extra_css %}
+  <link href="{% static 'css/create_product.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_label %}Inventaris / Tambah Produk{% endblock %}
+
+{% block nav_barang %}active{% endblock %}
+
+{% block content %}
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-heading">Tambah Produk</h1>
+      <p class="page-sub">Tambahkan data produk baru ke dalam sistem inventaris.</p>
+    </div>
+    <a href='#' class="btn-back">
+      <i class="bi bi-arrow-left"></i> Kembali
+    </a>
+  </div>
+
+  <!-- Form Card -->
+  <div class="form-card">
+
+    <div class="form-card-header">
+      <i class="bi bi-box-seam"></i>
+      <span>Informasi Produk</span>
+    </div>
+
+    <div class="form-card-body">
+      <form id="formCreateProduct" method="POST"
+            action="{% url 'dashboard_app:create_product' %}" novalidate>
+        {% csrf_token %}
+
+        <div class="row g-3">
+
+          <!-- Nama Produk -->
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="namaProduk">
+              Nama Produk <span class="required">*</span>
+            </label>
+            <div class="input-wrap">
+              <i class="bi bi-box-seam input-icon"></i>
+              <input type="text" id="namaProduk" name="name"
+                     class="form-input"
+                     placeholder="Contoh: Laptop Asus VivoBook"
+                     value="{{ form.nama.value|default:'' }}"/>
+            </div>
+            <div class="field-error" id="namaErr"></div>
+          </div>
+
+          <!-- Suplier -->
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="suplier">
+              Suplier <span class="required">*</span>
+            </label>
+            <div class="input-wrap">
+              <i class="bi bi-shop input-icon"></i>
+              <input type="text" id="namaProduk" name="suplier"
+                     class="form-input"
+                     placeholder="Contoh: PT HSM"
+                     value="{{ form.suplier.value|default:'' }}"/>
+            </div>
+            <div class="field-error" id="namaErr"></div>
+          </div>
+          
+          <!-- Kode Barang -->
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="kodeBarang">
+              Kode Barang <span class="required">*</span>
+            </label>
+            <div class="input-wrap">
+              <i class="bi bi-upc-scan input-icon"></i>
+              <input type="text" id="kodeBarang" name="kode_barang"
+                     class="form-input"
+                     placeholder="Contoh: PRD-001"
+                     value="{{ form.kode_barang.value|default:'' }}"/>
+            </div>
+            <div class="field-error" id="kodeErr"></div>
+            <div class="field-hint">Kode unik untuk identifikasi produk.</div>
+          </div>
+
+          <!-- Stok -->
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="stok">
+              Stok <span class="required">*</span>
+            </label>
+            <div class="input-wrap">
+              <i class="bi bi-layers input-icon"></i>
+              <input type="number" id="stok" name="stock"
+                     class="form-input"
+                     placeholder="0"
+                     min="0"
+                     value="{{ form.stok.value|default:'0' }}"/>
+            </div>
+            <div class="field-error" id="stokErr"></div>
+          </div>
+
+          <!-- Kategori -->
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="category">
+              Kategori <span class="required">*</span>
+            </label>
+            <div class="input-wrap">
+              <i class="bi bi-tag input-icon"></i>
+              <select id="kategori" name="category"
+                      class="form-input form-select-custom">
+                <option value="">-- Pilih Kategori --</option>
+                {% for kategori in list_category %}
+                  <option value="{{ kategori.id }}"
+                    {% if form.kategori.value == kategori.id %}selected{% endif %}>
+                    {{ kategori.name }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="field-error" id="kategoriErr"></div>
+          </div>
+
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <button type="button" class="btn-reset" id="btnReset">
+            <i class="bi bi-arrow-counterclockwise"></i> Reset
+          </button>
+          <button type="submit" class="btn-submit" id="btnSubmit">
+            <i class="bi bi-floppy"></i> Simpan Produk
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/create_product.js' %}"></script>
+{% endblock %}

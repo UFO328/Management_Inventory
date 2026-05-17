@@ -1,0 +1,23 @@
+<header class="topbar">
+
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <div class="topbar-title">
+    {% block page_label %}{% endblock %}
+  </div>
+
+  <div class="topbar-right">
+    <button class="topbar-icon-btn" title="Notifikasi">
+      <i class="bi bi-bell"></i>
+      <span class="notif-badge">3</span>
+    </button>
+
+    <a href="{% url 'account_app:logout' %}" class="topbar-logout" title="Keluar">
+      <i class="bi bi-box-arrow-right"></i>
+      <span>Keluar</span>
+    </a>
+  </div>
+
+</header>
