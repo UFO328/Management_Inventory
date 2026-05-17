@@ -24,4 +24,4 @@ dist/
 build/
 
 # Logs
-*.logfile
+logfile*
