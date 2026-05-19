@@ -1,7 +1,9 @@
 from .dashboard_view import DashboardView
+
 from .Inventory import(
   create_product_views,
   del_product,
+  ListProductView,
   ListTransactionView,
   transaction_views,
   )

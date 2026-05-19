@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from ..models import Karyawan
-from ..services import DataServices
+from dashboard.models import Karyawan
+from dashboard.services import DataServices
 from django.contrib import messages
 
 def delete_karyawan(request,pk):

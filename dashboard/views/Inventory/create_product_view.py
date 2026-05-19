@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect 
 from django.contrib import messages
-from ..services import DataServices
-from ..utils import check_field 
-from ..models import Category
+from dashboard.services import DataServices
+from dashboard.utils import check_field 
+from dashboard.models import Category
 from django.contrib.auth.decorators import permission_required,login_required
 
 @login_required

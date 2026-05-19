@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from ..services import DataServices
+from dashboard.services import DataServices
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required,login_required
 

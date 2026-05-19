@@ -1,6 +1,6 @@
 from django.views.generic import ListView 
 from django.shortcuts import render,redirect 
-from ..models import Karyawan,Jabatan,Departemen
+from dashboard.models import Karyawan,Jabatan,Departemen
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 
 from django.db.models import Q

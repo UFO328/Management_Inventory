@@ -1,5 +1,5 @@
 from django.views.generic import ListView
-from ..models import Product
+from dashboard.models import Product
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 

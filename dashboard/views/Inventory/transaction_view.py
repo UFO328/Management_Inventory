@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect 
-from ..models import Transaction,Product
+from dashboard.models import Transaction,Product
 from django.db.models import Q
 from django.contrib import messages
 from django.views.generic import ListView
-from ..utils import check_field
-from ..services import DataServices
+from dashboard.utils import check_field
+from dashboard.services import DataServices
 from django.contrib.auth.decorators import permission_required,login_required
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 
