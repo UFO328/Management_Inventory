@@ -1,10 +1,14 @@
 from .dashboard_view import DashboardView
-from .form_karywan_view import form_karyawan
-from .list_karyawan_view import ListKaryawan
-from .update_data_karyawan_view import update_data_karyawan
-from .update_data_karyawan_view import delete_karyawan
-from .create_product_view import create_product_views
-from .list_product_view import ListProductView
-from .transaction_view import transaction_views
-from .transaction_view import ListTransactionView
-from .delete_product import del_product
+from .Inventory import(
+  create_product_views,
+  del_product,
+  ListTransactionView,
+  transaction_views,
+  )
+  
+from .karyawan import (
+  form_karyawan,
+  ListKaryawan,
+  delete_karyawan,
+  update_data_karyawan
+  )

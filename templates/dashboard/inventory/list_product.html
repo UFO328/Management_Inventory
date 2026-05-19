@@ -4,11 +4,11 @@
 {% block title %}Daftar Produk — Sistem ERP{% endblock %}
 
 {% block extra_css %}
-  <link href="{% static 'css/alert.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/pagination.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/list_product.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/modal_transaction.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/modal_delete.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/components/alert.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/nav/pagination.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/page/list_product.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/modal/modal_transaction.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/modal/modal_delete.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {% block page_label %}Inventaris / Daftar Produk{% endblock %}
@@ -152,9 +152,9 @@
       </table>
     </div>
 
-    {% include 'components/pagination.html' %}
-    {% include 'components/modal_delete.html' %}
-    {% include 'components/modal_transaction.html' %}
+    {% include 'components/nav/pagination.html' %}
+    {% include 'components/modal/modal_delete.html' %}
+    {% include 'components/modal/modal_transaction.html' %}
     {% if not is_paginated %}
     <div class="table-footer">
       <span class="table-info">
@@ -168,8 +168,8 @@
 {% endblock %}
 
 {% block extra_js %}
-  <script src="{% static 'js/alert.js' %}"></script>
-  <script src="{% static 'js/list_product.js' %}"></script>
-  <script src="{% static 'js/modal_transaction.js' %}"></script>
-  <script src="{% static 'js/modal.js' %}"></script>
+  <script src="{% static 'js/components/alert.js' %}"></script>
+  <script src="{% static 'js/page/list_product.js' %}"></script>
+  <script src="{% static 'js/modal/modal_transaction.js' %}"></script>
+  <script src="{% static 'js/modal/modal.js' %}"></script>
 {% endblock %}

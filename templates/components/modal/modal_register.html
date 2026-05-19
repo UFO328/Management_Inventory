@@ -1,0 +1,126 @@
+<!-- =============================================
+   MODAL CREATE ACCOUNT — Component
+   {% include 'components/modal_create_account.html' %}
+   ============================================= -->
+
+<div class="modal-overlay" id="modalCreateAccount">
+  <div class="ca-box">
+
+    <!-- Header -->
+    <div class="ca-header">
+      <div class="ca-header-title">
+        <i class="bi bi-person-badge"></i>
+        <span>Buat Akun Karyawan</span>
+      </div>
+      <button type="button" class="ca-close" id="btnCaClose" aria-label="Tutup">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="ca-body">
+
+      <!-- Alert -->
+      <div class="ca-alert" id="caAlert">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span id="caAlertMsg"></span>
+      </div>
+
+      <form id="formCreateAccount" method="POST" novalidate>
+        {% csrf_token %}
+
+        <div class="row g-3">
+
+          <!-- Username -->
+          <div class="col-12 col-sm-6">
+            <label class="ca-label" for="caUsername">
+              Username <span class="ca-required">*</span>
+            </label>
+            <div class="ca-input-wrap">
+              <i class="bi bi-at ca-input-icon"></i>
+              <input type="text" id="caUsername" name="username"
+                     class="ca-input" placeholder="contoh: budi_gudang"/>
+            </div>
+            <div class="ca-field-error" id="caUsernameErr"></div>
+            <div class="ca-hint">Huruf kecil, angka, dan underscore saja.</div>
+          </div>
+
+          <!-- Role -->
+          <div class="col-12 col-sm-6">
+            <label class="ca-label" for="caRole">
+              Role <span class="ca-required">*</span>
+            </label>
+            <div class="ca-input-wrap">
+              <i class="bi bi-shield ca-input-icon"></i>
+              <select id="caRole" name="role" class="ca-input ca-select">
+                <option value="">-- Pilih Role --</option>
+                <option value="hrd">HRD</option>
+                <option value="manager">Manager</option>
+                <option value="kepala_gudang">Kepala Gudang</option>
+                <option value="staff_gudang">Staff Gudang</option>
+                <option value="staff_keuangan">Staff Keuangan</option>
+                <option value="viewer">Viewer (Read Only)</option>
+              </select>
+            </div>
+            <div class="ca-field-error" id="caRoleErr"></div>
+          </div>
+
+          <!-- Password -->
+          <div class="col-12 col-sm-6">
+            <label class="ca-label" for="caPassword">
+              Password <span class="ca-required">*</span>
+            </label>
+            <div class="ca-input-wrap">
+              <i class="bi bi-lock ca-input-icon"></i>
+              <input type="password" id="caPassword" name="password"
+                     class="ca-input" placeholder="Min. 8 karakter"/>
+              <button type="button" class="ca-toggle-pw" id="caTogglePw" tabindex="-1">
+                <i class="bi bi-eye" id="caEyeIcon"></i>
+              </button>
+            </div>
+            <div class="ca-field-error" id="caPasswordErr"></div>
+          </div>
+
+          <!-- Konfirmasi Password -->
+          <div class="col-12 col-sm-6">
+            <label class="ca-label" for="caPasswordConfirm">
+              Konfirmasi Password <span class="ca-required">*</span>
+            </label>
+            <div class="ca-input-wrap">
+              <i class="bi bi-lock-fill ca-input-icon"></i>
+              <input type="password" id="caPasswordConfirm"
+                     name="password_confirm"
+                     class="ca-input" placeholder="Ulangi password"/>
+            </div>
+            <div class="ca-field-error" id="caPasswordConfirmErr"></div>
+          </div>
+
+        </div>
+
+        <!-- Role info -->
+        <div class="ca-role-info" id="caRoleInfo">
+          <i class="bi bi-info-circle"></i>
+          <span id="caRoleInfoText"></span>
+        </div>
+
+        <!-- Note -->
+        <div class="ca-note">
+          <i class="bi bi-shield-check"></i>
+          Karyawan <strong>wajib mengganti password</strong> saat pertama kali login.
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="ca-footer">
+      <button type="button" class="ca-btn-cancel" id="btnCaCancel">
+        Batal
+      </button>
+      <button type="button" class="ca-btn-submit" id="btnCaSubmit">
+        <i class="bi bi-person-plus"></i> Buat Akun
+      </button>
+    </div>
+
+  </div>
+</div>

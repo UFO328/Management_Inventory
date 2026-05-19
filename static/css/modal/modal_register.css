@@ -1,0 +1,310 @@
+/* =============================================
+   MODAL CREATE ACCOUNT — Standalone CSS
+   Class prefix: ca-
+   ============================================= */
+
+/* ── Overlay ── */
+#modalCreateAccount {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .45);
+  z-index: 600;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+#modalCreateAccount.show {
+  display: flex;
+}
+
+/* ── Box ── */
+.ca-box {
+  background: var(--white);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .15);
+  animation: caIn .2s ease;
+  overflow: hidden;
+}
+
+@keyframes caIn {
+  from { transform: scale(.95); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Header ── */
+.ca-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: var(--primary);
+  flex-shrink: 0;
+}
+
+.ca-header-title {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.ca-header-title i { font-size: 1rem; }
+
+.ca-close {
+  background: rgba(255, 255, 255, .15);
+  border: none;
+  color: var(--white);
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: .85rem;
+  transition: background .15s;
+  flex-shrink: 0;
+}
+
+.ca-close:hover { background: rgba(255, 255, 255, .28); }
+
+/* ── Body ── */
+.ca-body {
+  padding: 1.25rem;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Alert ── */
+.ca-alert {
+  display: none;
+  align-items: center;
+  gap: .5rem;
+  background: #fdf3f3;
+  border: 1px solid #f1b0b0;
+  border-left: 4px solid var(--danger);
+  color: var(--danger);
+  border-radius: 5px;
+  padding: .6rem .85rem;
+  font-size: .84rem;
+}
+
+.ca-alert.show { display: flex; }
+
+/* ── Label ── */
+.ca-label {
+  display: block;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: .35rem;
+}
+
+.ca-required { color: var(--danger); }
+
+/* ── Input wrap ── */
+.ca-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ca-input-icon {
+  position: absolute;
+  left: .7rem;
+  color: var(--muted);
+  font-size: .9rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Input ── */
+.ca-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: .55rem .8rem .55rem 2.2rem;
+  font-size: .9rem;
+  color: var(--text);
+  background: var(--white);
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.ca-input::placeholder { color: #b0bbc9; }
+
+.ca-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(46, 134, 193, .13);
+}
+
+.ca-input.is-error {
+  border-color: var(--danger);
+  background: #fffafa;
+}
+
+/* ── Select ── */
+.ca-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16'%3E%3Cpath fill='%236c7a8d' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  padding-right: 2rem;
+  cursor: pointer;
+}
+
+/* ── Toggle password ── */
+.ca-toggle-pw {
+  position: absolute;
+  right: .7rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: .95rem;
+  padding: 0;
+  line-height: 1;
+  transition: color .15s;
+}
+
+.ca-toggle-pw:hover { color: var(--text); }
+
+/* ── Field error ── */
+.ca-field-error {
+  font-size: .77rem;
+  color: var(--danger);
+  margin-top: .3rem;
+  display: none;
+}
+
+.ca-field-error.show { display: block; }
+
+/* ── Hint ── */
+.ca-hint {
+  font-size: .76rem;
+  color: var(--muted);
+  margin-top: .3rem;
+}
+
+/* ── Role info ── */
+.ca-role-info {
+  display: none;
+  align-items: flex-start;
+  gap: .5rem;
+  background: #eef5fb;
+  border: 1px solid #b8d4ea;
+  border-radius: 5px;
+  padding: .6rem .85rem;
+  font-size: .83rem;
+  color: #1a4f72;
+  margin-top: .25rem;
+}
+
+.ca-role-info.show { display: flex; }
+.ca-role-info i { flex-shrink: 0; margin-top: .1rem; }
+
+/* ── Note ── */
+.ca-note {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  background: #f0f7f0;
+  border: 1px solid #b2d8b2;
+  border-radius: 5px;
+  padding: .6rem .85rem;
+  font-size: .83rem;
+  color: #1a4a1a;
+  margin-top: .25rem;
+}
+
+.ca-note i { flex-shrink: 0; margin-top: .1rem; color: var(--success); }
+
+/* ── Footer ── */
+.ca-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .65rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border);
+  background: #fafbfc;
+  flex-shrink: 0;
+}
+
+.ca-btn-cancel {
+  padding: .55rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--white);
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .2s, color .2s;
+}
+
+.ca-btn-cancel:hover { background: var(--bg); color: var(--text); }
+
+.ca-btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .55rem 1.25rem;
+  border: none;
+  border-radius: 5px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .2s;
+}
+
+.ca-btn-submit:hover:not(:disabled) { background: var(--primary-hover); }
+.ca-btn-submit:disabled { opacity: .7; cursor: not-allowed; }
+.ca-btn-submit.success  { background: var(--success); }
+
+/* ── Spinner ── */
+.ca-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, .35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: caSpin .7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes caSpin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ── */
+@media (max-width: 576px) {
+  .ca-box     { max-height: 95vh; border-radius: 8px; }
+  .ca-body    { padding: 1rem .85rem; }
+  .ca-footer  {
+    flex-direction: column-reverse;
+    gap: .5rem;
+    padding: .85rem;
+  }
+  .ca-btn-cancel,
+  .ca-btn-submit {
+    width: 100%;
+    justify-content: center;
+  }
+}

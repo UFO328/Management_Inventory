@@ -8,7 +8,7 @@ from django.db.models import Q
 class ListKaryawan(LoginRequiredMixin,PermissionRequiredMixin,ListView):
   model = Karyawan
   context_object_name = 'list_karyawan'
-  template_name = 'dashboard/list_karyawan.html'
+  template_name = 'dashboard/karyawan/list_karyawan.html'
   permission_required = 'dashboard.view_karyawan'
   raise_exception=True
   ordering = 'id'

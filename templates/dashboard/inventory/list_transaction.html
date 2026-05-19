@@ -4,9 +4,9 @@
 {% block title %}Data Transaksi — Sistem ERP{% endblock %}
 
 {% block extra_css %}
-  <link href="{% static 'css/alert.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/pagination.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/list_transaction.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/components/alert.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/nav/pagination.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/page/list_transaction.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {% block page_label %}Inventaris / Data Transaksi{% endblock %}
@@ -185,7 +185,7 @@
       </table>
     </div>
 
-    {% include 'components/pagination.html' %}
+    {% include 'components/nav/pagination.html' %}
 
     {% if not is_paginated %}
     <div class="table-footer">
@@ -199,6 +199,6 @@
 {% endblock %}
 
 {% block extra_js %}
-  <script src="{% static 'js/alert.js' %}"></script>
-  <script src="{% static 'js/list_transaction.js' %}"></script>
+  <script src="{% static 'js/components/alert.js' %}"></script>
+  <script src="{% static 'js/page/list_transaction.js' %}"></script>
 {% endblock %}

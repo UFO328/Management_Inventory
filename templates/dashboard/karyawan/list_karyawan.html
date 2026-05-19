@@ -4,11 +4,11 @@
 {% block title %}Data Karyawan — Sistem ERP{% endblock %}
 
 {% block extra_css %}
-  <link href="{% static 'css/alert.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/pagination.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/karyawan_list.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/modal.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/modal_delete.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/components/alert.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/nav/pagination.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/page/karyawan_list.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/modal/modal.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/modal/modal_delete.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {% block page_label %}SDM / Data Karyawan{% endblock %}
@@ -189,7 +189,7 @@
     </div>
 
     <!-- Pagination — teruskan parameter GET -->
-    {% include 'components/pagination.html' %}
+    {% include 'components/nav/pagination.html' %}
 
     {% if not is_paginated %}
     <div class="table-footer">
@@ -201,13 +201,13 @@
 
   </div>
 
-  {% include 'components/modal_update_karyawan.html' %}
-  {% include 'components/modal_delete.html' %}
+  {% include 'components/modal/modal_update_karyawan.html' %}
+  {% include 'components/modal/modal_delete.html' %}
 
 {% endblock %}
 
 {% block extra_js %}
-  <script src="{% static 'js/alert.js' %}"></script>
-  <script src="{% static 'js/karyawan_list.js' %}"></script>
-  <script src="{% static 'js/modal.js' %}"></script>
+  <script src="{% static 'js/components/alert.js' %}"></script>
+  <script src="{% static 'js/page/karyawan_list.js' %}"></script>
+  <script src="{% static 'js/modal/modal.js' %}"></script>
 {% endblock %}

@@ -37,4 +37,4 @@ def update_data_karyawan(request,id):
     else:
       messages.error(request,result.get('messages'))
       return redirect('dashboard_app:list_karyawan')
-  return render(request,'dashboard/list_karyawan.html')
+  return render(request,'dashboard/karyawan/list_karyawan.html')

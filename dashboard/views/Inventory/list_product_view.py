@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixi
 class ListProductView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
   model = Product
   context_object_name = 'list_product'
-  template_name = 'dashboard/list_product.html'
+  template_name = 'dashboard/inventory/list_product.html'
   permission_required = 'dashboard.view_product'
   raise_exception=True
   ordering = 5 

@@ -28,5 +28,5 @@ def form_karyawan(request):
       return redirect('dashboard_app:tambah_karyawan')
   jabatan = DataServices.get_jabatan()
   departemen = DataServices.get_departemen()
-  return render(request,'dashboard/form_kariyawan.html',{'jabatan_list':jabatan,'departemen_list':departemen})
+  return render(request,'dashboard/karyawan/form_kariyawan.html',{'jabatan_list':jabatan,'departemen_list':departemen})
       

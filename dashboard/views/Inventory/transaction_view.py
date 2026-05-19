@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixi
 
 class ListTransactionView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
   model = Transaction
-  template_name = 'dashboard/list_transaction.html'
+  template_name = 'dashboard/inventory/list_transaction.html'
   permission_required = 'dashboard.view_transaction'
   raise_exception=True
   context_object_name = 'list_transaction'

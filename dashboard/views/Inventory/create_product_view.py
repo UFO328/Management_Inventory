@@ -33,7 +33,5 @@ def create_product_views(request):
     else:
       messages.error(request,result.get('messages'))
       return redirect('dashboard_app:create_product')
-  print("autentikasi:",request.user.is_authenticated)
-  print("permission_required:",request.user.has_perm('dashboard.add_product'))
   list_category = Category.objects.only('id','name')
-  return render(request,'dashboard/create_product.html',{'list_category':list_category})
+  return render(request,'dashboard/inventory/create_product.html',{'list_category':list_category})
