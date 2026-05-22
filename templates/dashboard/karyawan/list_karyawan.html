@@ -165,6 +165,13 @@
                       onclick="openDeleteModal(this.dataset)">
                 <i class="bi bi-trash"></i>
               </button>
+              <button type="button"
+                      class="bi bi-person-plus-fill" title="Create Account"
+                      data-nama="{{ karyawan.nama }}"
+                      data-url="{% url 'dashboard_app:delete_karyawan' karyawan.id %}"
+                      onclick="modalCreateAccount(this.dataset)">
+                <i class="bi bi-trash"></i>
+              </button>
             </td>
           </tr>
           {% empty %}

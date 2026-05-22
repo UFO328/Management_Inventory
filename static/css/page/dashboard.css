@@ -1,0 +1,190 @@
+/* =============================================
+   DASHBOARD — ERP System
+   Konsisten dengan navbar.css color palette
+   ============================================= */
+
+/* ══════════════════════════════
+   HEADER
+══════════════════════════════ */
+.dashboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: .2rem;
+  letter-spacing: -.01em;
+}
+
+.dashboard-subtitle {
+  font-size: .88rem;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════
+   STATS GRID
+══════════════════════════════ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Stat Card ── */
+.stats-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.stats-card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  opacity: .08;
+  background: currentColor;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.1);
+}
+
+/* Color variants */
+.stats-card.blue {
+  background: linear-gradient(135deg, #e8f1fb 0%, #ddeaf8 100%);
+  border-color: #c5daf5;
+  color: var(--primary);
+}
+
+.stats-card.green {
+  background: linear-gradient(135deg, #eaf7ec 0%, #dcf0de 100%);
+  border-color: #a3d6a7;
+  color: #1a5c27;
+}
+
+.stats-card.orange {
+  background: linear-gradient(135deg, #fef3e8 0%, #fde8d0 100%);
+  border-color: #f5c99a;
+  color: #7d4a0d;
+}
+
+/* ── Icon ── */
+.stats-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.blue  .stats-icon { background: rgba(30,58,95,.12);  color: var(--primary); }
+.green .stats-icon { background: rgba(30,126,52,.12); color: #1e7e34; }
+.orange .stats-icon { background: rgba(200,120,30,.12); color: #c8781e; }
+
+/* ── Text ── */
+.stats-label {
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  opacity: .65;
+  margin-bottom: .2rem;
+}
+
+.stats-value {
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+
+/* ══════════════════════════════
+   CHART GRID
+══════════════════════════════ */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ── Chart Card ── */
+.chart-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem .75rem;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.chart-header h3 {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: .01em;
+}
+
+/* ApexCharts container */
+#chartTrasactionPerDay,
+#transaction-type-chart {
+  padding: .5rem;
+  min-height: 240px;
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 900px) {
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: .75rem;
+  }
+
+  .stats-card { padding: 1rem 1.1rem; }
+  .stats-value { font-size: 1.6rem; }
+  .stats-icon  { width: 42px; height: 42px; font-size: 1.1rem; }
+
+  .dashboard-title { font-size: 1.15rem; }
+  .dashboard-header { margin-bottom: 1.25rem; }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

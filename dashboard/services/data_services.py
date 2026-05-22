@@ -1,6 +1,6 @@
 from ..models import Karyawan,Jabatan,Departemen,Product,Category,Transaction
 from django.db import transaction,IntegrityError
-from django.db.models import F
+from django.db.models import F,Sum
 class DataServices:
   
   @classmethod
@@ -35,8 +35,18 @@ class DataServices:
   @classmethod
   def get_jabatan(cls):
     return Jabatan.objects.only('id','jabatan').order_by('id')
-      
+    
+  @classmethod
+  def get_total_product(cls):
+    return Product.objects.count()
+    
+  @classmethod
+  def get_total_transaction(cls):
+    return Transaction.objects.count()
   
+  @classmethod
+  def get_total_stock(cls):
+    return Product.objects.aggregate(total=Sum('stock'))
   @classmethod
   def get_departemen(cls):
     return Departemen.objects.only('id','departemen').order_by('id')

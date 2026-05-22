@@ -1,8 +1,159 @@
 {% extends 'base.html' %}
-{% block title %}Dashboard — Sistem ERP{% endblock %}
+{% load static %}
 
-{% block nav_karyawan %}active{% endblock %}
+{% block title %}
+Dashboard — Sistem ERP
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/page/dashboard.css' %}"
+>
+{% endblock %}
 
 {% block content %}
-<p>selamat datang di sistem ERP</p>
+
+<div class="dashboard-header">
+
+    <div>
+        <h1 class="dashboard-title">
+            Dashboard
+        </h1>
+
+        <p class="dashboard-subtitle">
+            Halo {{ request.user.first_name }}
+        </p>
+    </div>
+
+</div>
+
+<!-- STATISTIC CARD -->
+
+<div class="stats-grid">
+
+    <div class="stats-card blue">
+
+        <div class="stats-icon">
+            <i class="bi bi-box-seam"></i>
+        </div>
+
+        <div>
+
+            <p class="stats-label">
+                Total Product
+            </p>
+
+            <h2 class="stats-value">
+                {{ total_product }}
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="stats-card green">
+
+        <div class="stats-icon">
+            <i class="bi bi-arrow-left-right"></i>
+        </div>
+
+        <div>
+
+            <p class="stats-label">
+                Total Transaction
+            </p>
+
+            <h2 class="stats-value">
+                {{ total_transaction }}
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="stats-card orange">
+
+        <div class="stats-icon">
+            <i class="bi bi-archive"></i>
+        </div>
+
+        <div>
+
+            <p class="stats-label">
+                Total Stock
+            </p>
+
+            <h2 class="stats-value">
+                {{ total_stock }}
+            </h2>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CHART -->
+
+<div class="chart-grid">
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <h3>
+                Transaction Per Day
+            </h3>
+
+        </div>
+
+        <div id="chartTrasactionPerDay"></div>
+
+    </div>
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <h3>
+                Transaction Type
+            </h3>
+
+        </div>
+
+        <div id="transaction-type-chart"></div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+    const labelsTransactionPerDay =
+        {{ labelsTransactionPerDay|safe }}
+
+    const dataTransactionPerDay =
+        {{ dataTransactionPerDay|safe }}
+
+    const transactionTypeLabels =
+        {{ transactionTypeLabels|safe }}
+
+    const transactionTypeData =
+        {{ transactionTypeData|safe }}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script src="{% static 'js/chart/chart_transaction_per_day.js' %}"></script>
+
+<script src="{% static 'js/chart/chart_transaction_per_type.js' %}"></script>
+
+<script src="{% static 'js/page/dashboard.js' %}"></script>
+
 {% endblock %}
