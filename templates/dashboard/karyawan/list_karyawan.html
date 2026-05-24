@@ -9,6 +9,7 @@
   <link href="{% static 'css/page/karyawan_list.css' %}" rel="stylesheet"/>
   <link href="{% static 'css/modal/modal.css' %}" rel="stylesheet"/>
   <link href="{% static 'css/modal/modal_delete.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/modal/modal_register.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {% block page_label %}SDM / Data Karyawan{% endblock %}
@@ -29,7 +30,6 @@
     </a>
   </div>
 
-  <!-- Alert -->
   {% include 'components/alert.html' %}
 
   <!-- Stats Row -->
@@ -43,10 +43,11 @@
     </div>
   </div>
 
-  <!-- Filter & Search Bar — server-side GET -->
+  <!-- Filter & Search -->
   <form method="GET" id="filterForm">
     <div class="filter-bar">
 
+      <!-- Search -->
       <div class="search-wrap">
         <i class="bi bi-search search-icon"></i>
         <input
@@ -59,12 +60,13 @@
           autocomplete="off"
         />
         {% if request.GET.q %}
-          <button type="button" class="search-clear" id="btnClearSearch" title="Hapus pencarian">
+          <button type="button" class="search-clear" id="btnClearSearch">
             <i class="bi bi-x"></i>
           </button>
         {% endif %}
       </div>
 
+      <!-- Dropdowns + Buttons -->
       <div class="filter-wrap">
         <select name="dept" id="filterDept" class="filter-select">
           <option value="">Semua Departemen</option>
@@ -92,7 +94,7 @@
 
         {% if request.GET.q or request.GET.dept or request.GET.jabatan %}
           <a href="{% url 'dashboard_app:list_karyawan' %}" class="btn-reset-filter">
-            <i class="bi bi-x-circle"></i> Reset
+            <i class="bi bi-arrow-counterclockwise"></i> Reset
           </a>
         {% endif %}
       </div>
@@ -103,7 +105,7 @@
   <!-- Table Card -->
   <div class="table-card">
     <div class="table-responsive-wrap">
-      <table class="data-table" id="karyawanTable">
+      <table class="data-table">
         <thead>
           <tr>
             <th style="width:40px;">No</th>
@@ -112,12 +114,13 @@
             <th class="hide-mobile">No. Telepon</th>
             <th>Departemen</th>
             <th class="hide-mobile">Jabatan</th>
-            <th style="width:100px; text-align:center;">Aksi</th>
+            <th style="width:130px; text-align:center;">Aksi</th>
           </tr>
         </thead>
         <tbody id="tableBody">
           {% for karyawan in list_karyawan %}
           <tr class="table-row">
+
             <td class="td-number">{{ forloop.counter }}</td>
 
             <td>
@@ -140,10 +143,8 @@
             <td class="td-muted hide-mobile">{{ karyawan.jabatan.jabatan }}</td>
 
             <td class="td-aksi">
-              <a href="#" class="btn-icon btn-view" title="Detail">
-                <i class="bi bi-eye"></i>
-              </a>
 
+              <!-- Edit -->
               <button type="button"
                       class="btn-icon btn-edit" title="Edit"
                       data-nama="{{ karyawan.nama }}"
@@ -158,6 +159,17 @@
                 <i class="bi bi-pencil"></i>
               </button>
 
+              <!-- Buat Akun -->
+              <button type="button"
+                      class="btn-icon btn-account" title="Buat Akun"
+                      data-id="{{ karyawan.id }}"
+                      data-nama="{{ karyawan.nama }}"
+                      data-url="{% url 'account_app:register_user' karyawan.id %}"
+                      onclick="bukaModalCreateAccount(this.dataset)">
+                <i class="bi bi-person-badge"></i>
+              </button>
+
+              <!-- Hapus -->
               <button type="button"
                       class="btn-icon btn-delete" title="Hapus"
                       data-nama="{{ karyawan.nama }}"
@@ -165,13 +177,7 @@
                       onclick="openDeleteModal(this.dataset)">
                 <i class="bi bi-trash"></i>
               </button>
-              <button type="button"
-                      class="bi bi-person-plus-fill" title="Create Account"
-                      data-nama="{{ karyawan.nama }}"
-                      data-url="{% url 'dashboard_app:delete_karyawan' karyawan.id %}"
-                      onclick="modalCreateAccount(this.dataset)">
-                <i class="bi bi-trash"></i>
-              </button>
+
             </td>
           </tr>
           {% empty %}
@@ -195,7 +201,6 @@
       </table>
     </div>
 
-    <!-- Pagination — teruskan parameter GET -->
     {% include 'components/nav/pagination.html' %}
 
     {% if not is_paginated %}
@@ -205,11 +210,11 @@
       </span>
     </div>
     {% endif %}
-
   </div>
 
   {% include 'components/modal/modal_update_karyawan.html' %}
   {% include 'components/modal/modal_delete.html' %}
+  {% include 'components/modal/modal_register.html' %}
 
 {% endblock %}
 
@@ -217,4 +222,5 @@
   <script src="{% static 'js/components/alert.js' %}"></script>
   <script src="{% static 'js/page/karyawan_list.js' %}"></script>
   <script src="{% static 'js/modal/modal.js' %}"></script>
+  <script src="{% static 'js/modal/modal_register.js' %}"></script>
 {% endblock %}

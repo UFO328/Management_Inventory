@@ -1,242 +1,285 @@
 // =============================================
-//  MODAL CREATE ACCOUNT — Standalone JS
-//  Buka: onclick="bukaModalCreateAccount(karyawanId, namaKaryawan)"
+// MODAL REGISTER ACCOUNT
+// File: modal_register.js
 // =============================================
 
 (function () {
 
-  // Role descriptions
-  var roleDesc = {
-    hrd:             'Dapat mengelola data karyawan, membuat akun, dan mengatur hak akses.',
-    manager:         'Dapat melihat semua laporan dan menyetujui transaksi.',
-    kepala_gudang:   'Dapat mengelola stok, barang masuk dan keluar.',
-    staff_gudang:    'Dapat input stok dan melihat data barang.',
-    staff_keuangan:  'Dapat input transaksi keuangan dan membuat laporan.',
-    viewer:          'Hanya dapat melihat data (read-only).',
-  };
+    console.log('Modal Register Loaded');
 
-  // ── Buka modal ──
-  window.bukaModalCreateAccount = function (karyawanId, namaKaryawan) {
-    var overlay = document.getElementById('modalCreateAccount');
-    if (!overlay) return;
+    // =============================================
+    // ELEMENTS
+    // =============================================
 
-    // Set action form
-    var form = document.getElementById('formCreateAccount');
-    if (form) {
-      form.action = dataset.id;
-      form.reset();
+    const overlay      = document.getElementById('modalCreateAccount');
+    const form         = document.getElementById('formCreateAccount');
+
+    const btnClose     = document.getElementById('btnCaClose');
+    const btnCancel    = document.getElementById('btnCaCancel');
+    const btnSubmit    = document.getElementById('btnCaSubmit');
+
+    const roleSelect   = document.getElementById('caRole');
+    const roleInfo     = document.getElementById('caRoleInfo');
+    const roleInfoText = document.getElementById('caRoleInfoText');
+
+    // =============================================
+    // VALIDATION CHECK
+    // =============================================
+
+    if (!overlay || !form) {
+        console.error('Modal register tidak ditemukan');
+        return;
     }
 
-    // Reset state
-    resetCaForm();
-    overlay.classList.add('show');
-    document.body.style.overflow = 'hidden';
+    // =============================================
+    // ROLE DESCRIPTION
+    // =============================================
 
-    var usernameEl = document.getElementById('caUsername');
-    if (usernameEl) usernameEl.focus();
-  };
+    const roleDesc = {
+        hrd: 'Dapat mengelola data karyawan dan akun.',
+        kepala_gudang: 'Dapat mengelola stok gudang.',
+        staff_gudang: 'Dapat input dan melihat stok.'
+    };
 
-  // ── Init saat DOM ready ──
-  document.addEventListener('DOMContentLoaded', function () {
+    // =============================================
+    // OPEN MODAL
+    // =============================================
 
-    var overlay     = document.getElementById('modalCreateAccount');
-    if (!overlay) return;
+    window.bukaModalCreateAccount = function (dataset) {
 
-    var btnClose    = document.getElementById('btnCaClose');
-    var btnCancel   = document.getElementById('btnCaCancel');
-    var btnSubmit   = document.getElementById('btnCaSubmit');
-    var form        = document.getElementById('formCreateAccount');
-    var roleSelect  = document.getElementById('caRole');
-    var togglePw    = document.getElementById('caTogglePw');
-    var eyeIcon     = document.getElementById('caEyeIcon');
-    var passwordEl  = document.getElementById('caPassword');
-    var roleInfo    = document.getElementById('caRoleInfo');
-    var roleInfoTxt = document.getElementById('caRoleInfoText');
+        console.log('OPEN MODAL');
+        console.log(dataset);
 
-    // ── Tutup modal ──
-    function tutup() {
-      overlay.classList.remove('show');
-      document.body.style.overflow = '';
+        resetForm();
+
+        // set form action
+        if (dataset.url) {
+            form.action = dataset.url;
+        }
+
+        overlay.classList.add('show');
+
+        document.body.style.overflow = 'hidden';
+
+        const usernameEl = document.getElementById('caUsername');
+
+        if (usernameEl) {
+            usernameEl.focus();
+        }
+    };
+
+    // =============================================
+    // CLOSE MODAL
+    // =============================================
+
+    function closeModal() {
+
+        overlay.classList.remove('show');
+
+        document.body.style.overflow = '';
     }
 
-    if (btnClose)  btnClose.addEventListener('click',  tutup);
-    if (btnCancel) btnCancel.addEventListener('click', tutup);
+    // =============================================
+    // CLOSE EVENTS
+    // =============================================
 
+    if (btnClose) {
+        btnClose.addEventListener('click', closeModal);
+    }
+
+    if (btnCancel) {
+        btnCancel.addEventListener('click', closeModal);
+    }
+
+    // click outside
     overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) tutup();
+
+        if (e.target === overlay) {
+            closeModal();
+        }
     });
 
+    // esc close
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && overlay.classList.contains('show')) tutup();
+
+        if (e.key === 'Escape') {
+            closeModal();
+        }
     });
 
-    // ── Toggle show/hide password ──
-    if (togglePw && passwordEl) {
-      togglePw.addEventListener('click', function () {
-        var isPass = passwordEl.type === 'password';
-        passwordEl.type = isPass ? 'text' : 'password';
-        if (eyeIcon) {
-          eyeIcon.className = isPass ? 'bi bi-eye-slash' : 'bi bi-eye';
-        }
-      });
-    }
+    // =============================================
+    // ROLE INFO
+    // =============================================
 
-    // ── Role info ──
     if (roleSelect) {
-      roleSelect.addEventListener('change', function () {
-        var val = this.value;
-        clearFieldError('caRole', 'caRoleErr');
-        if (val && roleDesc[val]) {
-          if (roleInfoTxt) roleInfoTxt.textContent = roleDesc[val];
-          if (roleInfo)    roleInfo.classList.add('show');
-        } else {
-          if (roleInfo) roleInfo.classList.remove('show');
-        }
-      });
-    }
 
-    // ── Clear error on input ──
-    ['caUsername', 'caPassword', 'caPasswordConfirm'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) {
-        el.addEventListener('input', function () {
-          var errMap = {
-            caUsername:        'caUsernameErr',
-            caPassword:        'caPasswordErr',
-            caPasswordConfirm: 'caPasswordConfirmErr',
-          };
-          clearFieldError(id, errMap[id]);
-          hideAlert();
+        roleSelect.addEventListener('change', function () {
+
+            const value = this.value;
+
+            if (value && roleDesc[value]) {
+
+                roleInfo.classList.add('show');
+
+                roleInfoText.textContent = roleDesc[value];
+
+            } else {
+
+                roleInfo.classList.remove('show');
+            }
         });
-      }
-    });
+    }
 
-    // ── Submit ──
+    // =============================================
+    // SUBMIT
+    // =============================================
+
     if (btnSubmit) {
-      btnSubmit.addEventListener('click', function () {
-        hideAlert();
-        clearAllCaErrors();
 
-        var username  = document.getElementById('caUsername')?.value.trim()  || '';
-        var role      = document.getElementById('caRole')?.value             || '';
-        var password  = document.getElementById('caPassword')?.value         || '';
-        var confirm   = document.getElementById('caPasswordConfirm')?.value  || '';
+        btnSubmit.addEventListener('click', function () {
 
-        if (!validate(username, role, password, confirm)) return;
+            clearErrors();
 
-        setLoading(true);
-        if (form) form.submit();
-      });
+            const usernameEl = document.getElementById('caUsername');
+            const roleEl     = document.getElementById('caRole');
+            const emailEl    = document.getElementById('email');
+
+            const username = usernameEl
+                ? usernameEl.value.trim()
+                : '';
+
+            const role = roleEl
+                ? roleEl.value
+                : '';
+
+            const email = emailEl
+                ? emailEl.value.trim()
+                : '';
+
+            let valid = true;
+
+            // username
+            if (!username) {
+
+                showError(
+                    'caUsernameErr',
+                    'Username wajib diisi'
+                );
+
+                valid = false;
+
+            } else if (!/^[a-z0-9_]+$/.test(username)) {
+
+                showError(
+                    'caUsernameErr',
+                    'Gunakan huruf kecil, angka, dan underscore'
+                );
+
+                valid = false;
+            }
+
+            // role
+            if (!role) {
+
+                showError(
+                    'caRoleErr',
+                    'Role wajib dipilih'
+                );
+
+                valid = false;
+            }
+
+            // email
+            if (!email) {
+
+                showError(
+                    'caEmailErr',
+                    'Email wajib diisi'
+                );
+
+                valid = false;
+            }
+
+            // invalid email
+            else if (
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+            ) {
+
+                showError(
+                    'caEmailErr',
+                    'Format email tidak valid'
+                );
+
+                valid = false;
+            }
+
+            if (!valid) {
+                return;
+            }
+
+            // loading state
+            btnSubmit.disabled = true;
+
+            btnSubmit.innerHTML =
+                '<div class="ca-spinner"></div> Menyimpan...';
+
+            form.submit();
+        });
     }
 
-    // ── Validasi ──
-    function validate(username, role, password, confirm) {
-      var valid = true;
+    // =============================================
+    // RESET FORM
+    // =============================================
 
-      if (!username) {
-        showFieldError('caUsername', 'caUsernameErr', 'Username tidak boleh kosong.');
-        valid = false;
-      } else if (!/^[a-z0-9_]+$/.test(username)) {
-        showFieldError('caUsername', 'caUsernameErr', 'Hanya huruf kecil, angka, dan underscore.');
-        valid = false;
-      }
+    function resetForm() {
 
-      if (!role) {
-        showFieldError('caRole', 'caRoleErr', 'Pilih role untuk akun ini.');
-        valid = false;
-      }
+        form.reset();
 
-      if (!password) {
-        showFieldError('caPassword', 'caPasswordErr', 'Password tidak boleh kosong.');
-        valid = false;
-      } else if (password.length < 8) {
-        showFieldError('caPassword', 'caPasswordErr', 'Password minimal 8 karakter.');
-        valid = false;
-      }
+        clearErrors();
 
-      if (!confirm) {
-        showFieldError('caPasswordConfirm', 'caPasswordConfirmErr', 'Konfirmasi password tidak boleh kosong.');
-        valid = false;
-      } else if (password !== confirm) {
-        showFieldError('caPasswordConfirm', 'caPasswordConfirmErr', 'Password tidak cocok.');
-        valid = false;
-      }
+        if (roleInfo) {
+            roleInfo.classList.remove('show');
+        }
 
-      if (!valid) showAlert('Periksa kembali isian form di bawah ini.');
-      return valid;
+        btnSubmit.disabled = false;
+
+        btnSubmit.innerHTML =
+            '<i class="bi bi-person-plus"></i> Buat Akun';
     }
 
-    // ── Helpers ──
-    function setLoading(on) {
-      if (!btnSubmit) return;
-      btnSubmit.disabled  = on;
-      btnSubmit.innerHTML = on
-        ? '<div class="ca-spinner"></div> Menyimpan...'
-        : '<i class="bi bi-person-plus"></i> Buat Akun';
+    // =============================================
+    // ERROR HELPERS
+    // =============================================
+
+    function showError(id, message) {
+
+        const el = document.getElementById(id);
+
+        if (!el) return;
+
+        el.textContent = message;
+
+        el.classList.add('show');
     }
 
-    function showAlert(msg) {
-      var alert = document.getElementById('caAlert');
-      var msgEl = document.getElementById('caAlertMsg');
-      if (msgEl)  msgEl.textContent = msg;
-      if (alert)  alert.classList.add('show');
-    }
+    function clearErrors() {
 
-    function hideAlert() {
-      var alert = document.getElementById('caAlert');
-      if (alert) alert.classList.remove('show');
-    }
+        const errors = [
+            'caUsernameErr',
+            'caRoleErr',
+            'caEmailErr'
+        ];
 
-    function showFieldError(inputId, errId, msg) {
-      var input = document.getElementById(inputId);
-      var err   = document.getElementById(errId);
-      if (input) input.classList.add('is-error');
-      if (err)   { err.textContent = msg; err.classList.add('show'); }
-    }
+        errors.forEach(function (id) {
 
-    function clearFieldError(inputId, errId) {
-      var input = document.getElementById(inputId);
-      var err   = document.getElementById(errId);
-      if (input) input.classList.remove('is-error');
-      if (err)   { err.textContent = ''; err.classList.remove('show'); }
-    }
+            const el = document.getElementById(id);
 
-    function clearAllCaErrors() {
-      ['caUsername', 'caRole', 'caPassword', 'caPasswordConfirm'].forEach(function (id) {
-        var errMap = {
-          caUsername:        'caUsernameErr',
-          caRole:            'caRoleErr',
-          caPassword:        'caPasswordErr',
-          caPasswordConfirm: 'caPasswordConfirmErr',
-        };
-        clearFieldError(id, errMap[id]);
-      });
-    }
+            if (!el) return;
 
-  });
+            el.textContent = '';
 
-  function resetCaForm() {
-    var roleInfo = document.getElementById('caRoleInfo');
-    if (roleInfo) roleInfo.classList.remove('show');
-    var alert = document.getElementById('caAlert');
-    if (alert) alert.classList.remove('show');
-    ['caUsername', 'caRole', 'caPassword', 'caPasswordConfirm'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.classList.remove('is-error');
-    });
-    ['caUsernameErr', 'caRoleErr', 'caPasswordErr', 'caPasswordConfirmErr'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) { el.textContent = ''; el.classList.remove('show'); }
-    });
-    var btnSubmit = document.getElementById('btnCaSubmit');
-    if (btnSubmit) {
-      btnSubmit.disabled  = false;
-      btnSubmit.innerHTML = '<i class="bi bi-person-plus"></i> Buat Akun';
+            el.classList.remove('show');
+        });
     }
-    var eyeIcon = document.getElementById('caEyeIcon');
-    var pwEl    = document.getElementById('caPassword');
-    if (eyeIcon) eyeIcon.className = 'bi bi-eye';
-    if (pwEl)    pwEl.type = 'password';
-  }
 
 })();

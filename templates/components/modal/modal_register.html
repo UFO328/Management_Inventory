@@ -1,6 +1,5 @@
 <!-- =============================================
    MODAL CREATE ACCOUNT — Component
-   {% include 'components/modal_create_account.html' %}
    ============================================= -->
 
 <div class="modal-overlay" id="modalCreateAccount">
@@ -54,47 +53,30 @@
               <i class="bi bi-shield ca-input-icon"></i>
               <select id="caRole" name="role" class="ca-input ca-select">
                 <option value="">-- Pilih Role --</option>
-                <option value="hrd">HRD</option>
-                <option value="manager">Manager</option>
-                <option value="kepala_gudang">Kepala Gudang</option>
-                <option value="staff_gudang">Staff Gudang</option>
-                <option value="staff_keuangan">Staff Keuangan</option>
-                <option value="viewer">Viewer (Read Only)</option>
+                <option value="HRD">HRD</option>
+                <option value="Kepala Gudang">Kepala Gudang</option>
+                <option value="Staff Gudang">Staff Gudang</option>
               </select>
             </div>
             <div class="ca-field-error" id="caRoleErr"></div>
           </div>
-
-          <!-- Password -->
+          
+          <!-- Email -->
           <div class="col-12 col-sm-6">
             <label class="ca-label" for="caPassword">
-              Password <span class="ca-required">*</span>
+              Email <span class="ca-required">*</span>
             </label>
             <div class="ca-input-wrap">
               <i class="bi bi-lock ca-input-icon"></i>
-              <input type="password" id="caPassword" name="password"
-                     class="ca-input" placeholder="Min. 8 karakter"/>
-              <button type="button" class="ca-toggle-pw" id="caTogglePw" tabindex="-1">
-                <i class="bi bi-eye" id="caEyeIcon"></i>
+              <input type="email" id="email" name="email"
+                     class="ca-input" placeholder="masukan email" required/>
+              <button type="button" class="ca-toggle-pw" id="caToggleemail" tabindex="-1">
+                <i class="bi bi-eye"></i>
               </button>
             </div>
-            <div class="ca-field-error" id="caPasswordErr"></div>
+            <div class="ca-field-error" id="caEmailErr"></div>
           </div>
-
-          <!-- Konfirmasi Password -->
-          <div class="col-12 col-sm-6">
-            <label class="ca-label" for="caPasswordConfirm">
-              Konfirmasi Password <span class="ca-required">*</span>
-            </label>
-            <div class="ca-input-wrap">
-              <i class="bi bi-lock-fill ca-input-icon"></i>
-              <input type="password" id="caPasswordConfirm"
-                     name="password_confirm"
-                     class="ca-input" placeholder="Ulangi password"/>
-            </div>
-            <div class="ca-field-error" id="caPasswordConfirmErr"></div>
-          </div>
-
+          
         </div>
 
         <!-- Role info -->

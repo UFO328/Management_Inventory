@@ -22,7 +22,8 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-kpfk*15p5y%8o*5=daew@ukawv7@$u$_dk@%%$*&bn8n9xm&5i'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -48,6 +49,13 @@ LOGIN_URL = 'account_app:login'
 LOGIN_REDIRECT_URL = 'dashboard_app:dashboard'  
 LOGOUT_REDIRECT_URL = 'account_app:login'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = getenv('YOUR_EMAIL')
+EMAIL_HOST_PASSWORD = getenv('YOUR_APP_PASSWORD_APPLICATION')
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,7 +64,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'account.middleware.forcepasswordmiddleware.ForcePasswordChangeMiddleware',
+] 
+
 
 ROOT_URLCONF = 'managemant_inventory_system.urls'
 

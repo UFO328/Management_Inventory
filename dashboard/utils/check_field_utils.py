@@ -1,5 +1,3 @@
-
-
 def check_field(request_post,field):
   error={}
   for f in field:

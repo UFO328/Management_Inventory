@@ -21,7 +21,7 @@ class Product(models.Model):
     suplier= models.CharField(max_length=255)
     category = models.ForeignKey(
         Category,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='products'
     )
 
@@ -37,7 +37,7 @@ class Transaction(models.Model):
 
     user = models.ForeignKey(
         User,
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
         related_name='transactions'
     )
 
@@ -62,15 +62,13 @@ class Departemen(models.Model):
   departemen = models.CharField(max_length=100)
 
 class Karyawan(models.Model):
-  
-  user = models.ForeignKey(User,on_delete=models.CASCADE)
   nama = models.CharField(max_length=255)
   nik = models.CharField(max_length=50, unique=True)
   email = models.EmailField()
   telepon = models.CharField(max_length=50)
   alamat = models.TextField()
-  jabatan = models.ForeignKey(Jabatan,on_delete=models.CASCADE)
-  departemen = models.ForeignKey(Departemen,on_delete=models.CASCADE)
+  jabatan = models.ForeignKey(Jabatan,on_delete=models.SET_NULL)
+  departemen = models.ForeignKey(Departemen,on_delete=models.SET_NULL)
   class Meta:
     unique_together = ['nik','nama','email']
   def __str__(self):

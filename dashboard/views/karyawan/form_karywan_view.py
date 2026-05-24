@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import permission_required,login_required
 def form_karyawan(request):
   if request.method == 'POST':
     data = {
-      'user':request.user,
       'nama':request.POST.get('nama'),
       'nik':request.POST.get('nik'),
       'email':request.POST.get('email'),

@@ -2,18 +2,20 @@ from django.shortcuts import render,redirect,get_object_or_404
 from dashboard.models import Karyawan
 from dashboard.services import DataServices
 from django.contrib import messages
+from django.contrib.auth.decorators import permission_required,login_required
 
+@login_required
+@permission_required('dashboard.delete_karyawan',raise_exception=True)
 def delete_karyawan(request,pk):
   if request.method == 'POST':
-    if request.user.role == 'admin':
       karyawan = get_object_or_404(Karyawan,pk=pk)
       karyawan.delete()
       messages.success(request,'DATA KARYAWAN BERHASIL DI HAPUS')
       return redirect('dashboard_app:list_karyawan')
-    else:
-      messages.error(request,'PERMISION DENIED')
-      return redirect('dashboard_app:list_karyawan')
       
+
+@login_required
+@permission_required('dashboard.change_karyawan',raise_exception=True)
 def update_data_karyawan(request,id):
   if request.method == 'POST':
     data = {
