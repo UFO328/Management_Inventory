@@ -20,7 +20,8 @@ Dan ketika kalian sudah migration pastikan kalian create manual di shell karena 
 - Authentication System
 - Authorization & Permission Management
 - CRUD Product
-- CRUD Employee
+- CRUD KARYAWAN
+- CRUD TRANSAKSI
 - Inventory Management
 - Transaction Management
 - Dashboard Management
@@ -85,7 +86,7 @@ Role Staff Gudang memiliki permission sebagai berikut:
 ### Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/UFO328/Management_Inventory.git
 ```
 
 ### Masuk Ke Folder Project
