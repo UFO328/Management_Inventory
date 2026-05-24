@@ -170,8 +170,8 @@ Riski
 
 ## License
 
-project ini aku buag karena aku sedang belajar programing.UI
-nya di buat denga 100%AI tapi backend aku yang buat sendiri
+project ini aku buat karena aku sedang belajar programing.UI
+nya di buat denga 100% AI tapi backend aku yang buat sendiri
 dan dokumentasi di buat dengan 60%AI dan 40% aku yang buat 
 PLEASE SUPPORT ME AND GIVE ME FEEDBACK YOUR FEEDBACK SO VERY USEFUL
 FOR ME.
