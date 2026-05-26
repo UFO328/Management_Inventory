@@ -4,8 +4,10 @@ from dashboard.models import Karyawan
 from django.shortcuts import render,redirect  
 from django.contrib import messages
 from ..utils import create_password_user,send_email_to_user
+from django.contrib.auth.decorators import permission_required,login_required
 
-
+@login_required
+@permission_required('account.add_user',raise_exception=True)
 def register_user(request,id):
   if request.method == 'POST':
     username = request.POST.get('username','').strip()

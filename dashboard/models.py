@@ -22,7 +22,9 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
-        related_name='products'
+        related_name='products',
+        null=True,
+        blank=True
     )
 
     def __str__(self):
@@ -38,7 +40,9 @@ class Transaction(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
-        related_name='transactions'
+        related_name='transactions',
+        null=True,
+        blank=True
     )
 
     product = models.ForeignKey(
@@ -67,8 +71,8 @@ class Karyawan(models.Model):
   email = models.EmailField()
   telepon = models.CharField(max_length=50)
   alamat = models.TextField()
-  jabatan = models.ForeignKey(Jabatan,on_delete=models.SET_NULL)
-  departemen = models.ForeignKey(Departemen,on_delete=models.SET_NULL)
+  jabatan = models.ForeignKey(Jabatan,on_delete=models.SET_NULL,null=True,blank=True)
+  departemen = models.ForeignKey(Departemen,on_delete=models.SET_NULL,null=True,blank=True)
   class Meta:
     unique_together = ['nik','nama','email']
   def __str__(self):

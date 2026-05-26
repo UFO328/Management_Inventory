@@ -5,6 +5,7 @@ ROLE_PERMISSIONS = {
         'add_karyawan',
         'change_karyawan',
         'delete_karyawan',
+        'add_user',
     ],
 
     'Staff Gudang': [
